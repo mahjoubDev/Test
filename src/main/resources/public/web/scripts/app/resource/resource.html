@@ -1,0 +1,214 @@
+<div class="content">
+
+    <h2 translate="category.title" class="btn-toolbar">categories</h2>
+
+    <div class="span6 pull-right">
+
+        <button ng-click="toggleModalAdd()" class="btn btn-success">Add New Categories
+        </button>
+    </div>
+    <h1>&nbsp;</h1>
+    <table st-table="categories" class="table table-bordered">
+        <thead>
+        <tr class="alert alert-danger">
+            <th st-sort="nameCategory">Name resource</th>
+            <th st-sort="reference">Reference resource</th>
+            <th st-sort="nameCategory">description category</th>
+            <th st-sort="reference">Name category</th>
+            <th st-sort="nameCategory">Type date</th>
+            <th st-sort="reference">Duree max</th>
+            <th st-sort="reference">Update category</th>
+            <th st-sort="reference">Delete category</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in resources" class="alert-info alert-warning">
+            <td>{{row.name | uppercase}}</td>
+            <td>{{row.reference}}</td>
+            <td>{{row.description }}</td>
+            <td>{{findCategory(row.referenceCategory)}}</td>
+            <td>{{row.typeDate }}</td>
+            <td>{{row.dureeMax}}</td>
+            <td>
+                <p data-placement="top" data-toggle="tooltip" title="Edit">
+                    <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"
+                            ng-click="toggleModalUpdate(row)">
+                        <span class="glyphicon glyphicon-pencil"></span></button>
+                </p>
+            </td>
+            <td>
+                <p data-placement="top" data-toggle="tooltip" title="Delete">
+                    <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"
+                            ng-click="delete(row)">
+                        <span class="glyphicon glyphicon-trash"></span></button>
+                </p>
+            </td>
+
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="8" class="text-center">
+                <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+
+
+    <div>
+        <modal title="Add Resource " visible="showModalAdd">
+            <form class="form-horizontal" role="form">
+
+                <div class="form-group">
+                    <label for="refrenceResource" class="col-sm-4 control-label">Reference resource </label>
+
+                    <div class="col-sm-6">
+                        <input class="form-control" id="refrenceResource" placeholder="Reference category "
+                               ng-model="resourceInfo.reference">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="nameResource" class="col-sm-4 control-label">name resource</label>
+
+                    <div class="col-sm-6">
+                        <input class="form-control" id="nameResource" placeholder="Name category"
+                               ng-model="resourceInfo.name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="descriptionCategory" class="col-sm-4 control-label">Description Category </label>
+
+                    <div class="col-sm-6">
+                        <input class="form-control" id="descriptionCategory" placeholder="Reference category "
+                               ng-model="resourceInfo.description">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="referenceCategory" class="col-sm-4 control-label"> category</label>
+
+                    <div class="col-sm-6">
+                        <select ng-model="resourceInfo.referenceCategory" name="category" style="display: inline-block;"
+                                class="form-control" id="referenceCategory">
+                            <option ng-repeat="category in categories" value="{{category.reference}}">
+                                {{category.nameCategorie}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="typeDate" class="col-sm-4 control-label">Type date </label>
+
+                    <div class="col-sm-6">
+                        <select ng-model="resourceInfo.typeDate" id="typeDate" class="form-control">
+                            <option value="HOUR" selected="selected">HOUR</option>
+                            <option value="DAY">DAY</option>
+                            <option value="WEEK">WEEK</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="dureeMax" class="col-sm-4 control-label">Duree max</label>
+
+                    <div class="col-sm-6">
+                        <input class="form-control" id="dureeMax" placeholder="Name category"
+                               ng-model="resourceInfo.dureeMax">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success" ng-click="add(resourceInfo)">Add</button>
+                    </div>
+                </div>
+
+
+            </form>
+        </modal>
+        <div>
+
+            <div>
+                <modal title="Update Resource" visible="showModalUpdate">
+
+                    <form class="form-horizontal" role="form">
+
+                        <div class="form-group">
+                            <label for="refrenceResource" class="col-sm-4 control-label">Reference resource </label>
+
+                            <div class="col-sm-6">
+                                <input class="form-control" id="refrenceResource" placeholder="Reference category "
+                                       ng-model="selectedResource.reference" disabled = "true">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nameResource" class="col-sm-4 control-label">name resource</label>
+
+                            <div class="col-sm-6">
+                                <input class="form-control" id="nameResource" placeholder="Name category"
+                                       ng-model="selectedResource.name">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descriptionCategory" class="col-sm-4 control-label">Description
+                                Category </label>
+
+                            <div class="col-sm-6">
+                                <input class="form-control" id="descriptionCategory" placeholder="Reference category "
+                                       ng-model="selectedResource.description">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="referenceCategory" class="col-sm-4 control-label"> category</label>
+
+                            <div class="col-sm-6">
+                                <select ng-model="selectedResource.referenceCategory" name="category"
+                                        style="display: inline-block;"
+                                        class="form-control" id="referenceCategory">
+                                    <option ng-repeat="category in categories" value="{{category.reference}}" >
+                                        {{category.nameCategorie}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="typeDate" class="col-sm-4 control-label">Type date </label>
+
+                            <div class="col-sm-6">
+                                <select ng-model="selectedResource.typeDate" id="typeDate" class="form-control">
+                                    <option value="HOUR" selected="selected">HOUR</option>
+                                    <option value="DAY">DAY</option>
+                                    <option value="WEEK">WEEK</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dureeMax" class="col-sm-4 control-label">Duree max</label>
+
+                            <div class="col-sm-6">
+                                <input class="form-control" id="dureeMax" placeholder="Name category"
+                                       ng-model="selectedResource.dureeMax">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success" ng-click="update()">Add</button>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </modal>
+                <div>
+
+                </div>

@@ -1,0 +1,11 @@
+{
+  "category": {
+    "title": "List of Catgories",
+    "nbloggers": "There are {{ total }} categories.",
+    "filter": "Filter",
+    "table": {
+      "name": "Name",
+      "reference": "Reference"
+    }
+  }
+}

@@ -1,0 +1,254 @@
+<div class="content">
+
+    <h2 translate="reservation.title" class="btn-toolbar">reservations </h2>
+
+    <div class="span6 pull-right">
+
+        <button ng-click="toggleModalAdd()" class="btn btn-success">Add New reservation
+        </button>
+    </div>
+
+    <button type="button" class="btn btn-default " ng-click="collapse = !collapse"
+            ng-class="(!collapse && 'glyphicon glyphicon-eye-open') || (collapse && 'glyphicon glyphicon-eye-close')" data-toggle="collapse"
+            data-target="#cat" ></button>
+    <div class="row" id="cat" class="collapse in">
+        <div class=" col-sm-1 ">
+        </div>
+
+        <div class="col-sm-4 ">
+            <div class="well">
+                <ul class="nav">
+                    <li class="alert alert-info"><strong>Select a Category</strong></li>
+                    <li ng-repeat="category in categories" ng-bind-html-unsafe="category"
+                        ng-click="getResourceByReferenceCategory(category.reference)"><a href="">{{category.nameCategorie}}</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.well -->
+        </div>
+        <!--/span-->
+        <div class=" col-sm-2 ">
+        </div>
+
+        <div class="col-sm-4 " id="resource" role="navigation" ng-show="showResourceRelatedToCtagory">
+            <div class="well ">
+                <ul class="nav">
+                    <li class="alert alert-info"><strong>Select a Resource</strong></li>
+                    <li ng-repeat="resource in resourcesByCategory" ng-bind-html-unsafe="resource"
+                        ng-click="getReservationsByReferenceResources(resource.reference)"><a
+                            href="">{{resource.name}}</a></li>
+                </ul>
+            </div>
+            <!--/.well -->
+        </div>
+        <!--/span-->
+
+        <div class=" col-sm-1 ">
+        </div>
+    </div>
+</div>
+
+<!--==============================================================================================================================-->
+<!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<!--==============================================================================================================================-->
+<div>
+    &nbsp;
+</div>
+<div class="alert-danger col-lg-12 text-center" ng-show="eventsResourceRelatedToResource">
+    <h4> calendar events </h4>
+</div>
+<div dhx-scheduler style="height:350px; width:100%;" data="events" class="alert alert-warning"
+     ng-show="eventsResourceRelatedToResource">
+    <div class="dhx_cal_prev_button">&nbsp;</div>
+    <div class="dhx_cal_next_button">&nbsp;</div>
+    <div class="dhx_cal_today_button"></div>
+    <div class="dhx_cal_date"></div>
+    <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+    <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+    <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+
+    <div dhx-template="event_bar_text">
+        <strong>#{{event.id}}</strong>: {{event.text | uppercase}}
+    </div>
+
+</div>
+
+<div>
+    <modal title="Add Reservation " id="custom_form" visible="showModalAdd">
+        <form class="form-horizontal" role="form">
+
+            <div class="form-group">
+                <label for="refrenceReservation" class="col-sm-4 control-label">Reference reservation </label>
+
+                <div class="col-sm-6">
+                    <input class="form-control" id="refrenceReservation" placeholder="Reference Reservation "
+                           ng-model="reservationInfo.reference">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dateStart" class="col-sm-4 control-label">Date start</label>
+
+                <div class="col-sm-6">
+                    <input class="form-control" id="dateStart" placeholder="Date start" jqdatepicker
+                           ng-model="$parent.reservationInfo.dateStart">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dateEnd" class="col-sm-4 control-label">Date end </label>
+
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="dateEnd" placeholder="Date end "
+                           ng-model="$parent.reservationInfo.dateEnd" jqdatepicker>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description" class="col-sm-4 control-label">Description</label>
+
+                <div class="col-sm-6">
+                    <input class="form-control" id="description" placeholder="Description"
+                           ng-model="reservationInfo.description">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Login" class="col-sm-4 control-label">Login </label>
+
+                <div class="col-sm-6">
+                    <input class="form-control" id="Login" placeholder="Description"
+                           ng-model="reservationInfo.loginUser">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="referenceResourcey" class="col-sm-4 control-label"> Resource</label>
+
+                <div class="col-sm-6">
+                    <select ng-model="reservationInfo.referenceResource" name="resource"
+                            style="display: inline-block;"
+                            class="form-control" id="referenceResourcey">
+                        <option ng-repeat="resource in resources" value="{{resource.reference}}">
+                            {{resource.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-success" ng-click="add(reservationInfo)">Add</button>
+                </div>
+            </div>
+
+        </form>
+    </modal>
+</div>
+
+<!--====================================================================================================================-->
+<!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;update reservation -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<!--====================================================================================================================-->
+
+<div>
+    <modal title="Update Reservation " visible="showModalUpdate">
+        <form class="form-horizontal" role="form">
+
+            <div class="form-group">
+                <label for="refrenceReservationUpdate" class="col-sm-4 control-label">Reference reservation </label>
+
+                <div class="col-sm-6">
+                    <input class="form-control" id="refrenceReservationUpdate" placeholder="Reference Reservation "
+                           ng-model="reservationInfo.reference" disabled="true">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dateStartUpdate" class="col-sm-4 control-label">Date start</label>
+
+                <div class="col-sm-6">
+                    <input class="form-control" id="dateStartUpdate" ng-disabled="!isUserOwner() && !isAdmin()"
+                           placeholder="Date start" jqdatepicker
+                           ng-model="$parent.reservationInfo.dateStart" | date>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dateEndUpdate" class="col-sm-4 control-label">Date end </label>
+
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-disabled="!isUserOwner() && !isAdmin()"
+                           id="dateEndUpdate" placeholder="Date end " jqdatepicker
+                           ng-model="$parent.reservationInfo.dateEnd" | date>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="descriptionUpdate" class="col-sm-4 control-label">Description</label>
+
+                <div class="col-sm-6">
+                    <input class="form-control" id="descriptionUpdate" placeholder="Description"
+                           ng-model="reservationInfo.description" disabled="true">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="LoginUpdate" class="col-sm-4 control-label">Login </label>
+
+                <div class="col-sm-6">
+                    <input class="form-control" id="LoginUpdate" placeholder="User"
+                           ng-model="reservationInfo.loginUser" disabled="true">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="resourceUpdate" class="col-sm-4 control-label"> Resource</label>
+
+                <div class="col-sm-6">
+                    <input class="form-control" id="resourceUpdate" placeholder="Resource"
+                           ng-model="reservationInfo.referenceResource" disabled="true">
+                </div>
+            </div>
+            <div class="form-group center-block">
+                <div class="col-sm-3 col-sm-10">
+                </div>
+                <div class="col-sm-3 col-sm-10">
+                    <button type="submit" class="btn btn-success" ng-disabled="!isUserOwner()&& !isAdmin()"
+                            ng-click="update(reservationInfo)">Update
+                    </button>
+                </div>
+                <div class="col-sm-3 col-sm-10">
+                    <button type="submit" class="btn btn-danger" ng-disabled="!isAdmin()"
+                            ng-click="toggleModalDelete()">Delete
+                    </button>
+                </div>
+                <div class="col-sm-3 col-sm-10">
+                </div>
+            </div>
+
+        </form>
+    </modal>
+</div>
+
+<modal id="myModal" class="modal " visible="showModalDelete">
+
+    <div class="modal-header alert-info">
+        <a href="#" data-dismiss="modal" aria-hidden="true" class="close">×</a>
+        Delete
+    </div>
+
+    <div class="modal-body alert-warning">
+        <p>You are about to delete.</p>
+
+        <p>Do you want to proceed?</p>
+    </div>
+    <div class="modal-footer">
+        <a  id="btnYes" class="btn btn-danger" ng-click="delete(reservationInfo)">Yes</a>
+        <a href="#" data-dismiss="modal" aria-hidden="true" class="btn btn-success">No</a>
+    </div>
+</modal>
+
+
+</div>
+

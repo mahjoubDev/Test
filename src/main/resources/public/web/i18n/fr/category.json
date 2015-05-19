@@ -1,0 +1,11 @@
+{
+  "category": {
+    "title": "liste de Catgories",
+    "nbloggers": "Il ya   {{ total }} categories.",
+    "filter": "Filter",
+    "table": {
+      "name": "Nom",
+      "reference": "Reference"
+    }
+  }
+}
