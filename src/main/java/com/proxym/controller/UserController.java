@@ -29,31 +29,56 @@ import com.wordnik.swagger.annotations.ApiOperation;
 @Api(basePath = "/proxym", value = "User", description = "Operations with Users", produces = "application/json")
 @RestController
 @RequestMapping("/proxym/user")
-public class UserController extends AbstractRestHandler  {
+public class UserController extends AbstractRestHandler {
 	/**
 	 * {@link UserService}
 	 */
 	@Autowired
-	private UserService userService ;
-	
+	private UserService userService;
+
 	/**
 	 * The logger instance . All log messages from this class are routed through
 	 * this member.
 	 */
-	private final  static Logger LOGGER = LoggerFactory.getLogger(ResourceController.class);
-	
+	private final static Logger LOGGER = LoggerFactory
+			.getLogger(ResourceController.class);
+
 	/**
 	 * get the current user informations.
 	 * 
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	@RequestMapping(value="/account",method=RequestMethod.GET,produces = "application/json")
+	@RequestMapping(value = "/account", method = RequestMethod.GET, produces = "application/json")
 	@ApiOperation(value = "Get current user informations", notes = "Get current user informations")
-	public UserInfo getAccount (HttpServletRequest request) throws Exception  {
+	public UserInfo getAccount(HttpServletRequest request) throws Exception {
+
+		// return userService.getCurrentLoggedUser(request.getRemoteUser()) ;
 		
-		return userService.getCurrentLoggedUser(request.getRemoteUser()) ;
 		
+
+		/*
+		 * fake date used only for dev environement and must be removed as soon
+		 * as the application is being deployed inthe exo platform
+		 */
+
+		List<String> UserRoles = Arrays.asList("users");
+		List<String> adminRoles = Arrays.asList("executive-board", "users",
+				"administrators", "employees", "web-contributors");
+		List<String> superAdminRoles = Arrays.asList("users", "Domain Admins",
+				"Proxym-Group", "Enterprise Admins", "Grp_Crm");
+
+		UserInfo simpleUser = new UserInfo("nesrine","nesrine", "rinez",
+				"nesrineRines@proxym.it", UserRoles);
+		UserInfo admin = new UserInfo("root","root", "root", "root@proxym.it",
+				adminRoles);
+		UserInfo superAdmin = new UserInfo("admin","admin", "admin", "admin@proxym.it",
+				superAdminRoles);
+
+		return admin;
+
+		/* end fake date block */
+
 	}
- 
+
 }

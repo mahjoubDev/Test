@@ -29,7 +29,7 @@ public class ResourceValidator {
 	 */
 	public static void checkCategoryExist(String referenceCategory,Categorie categorie) throws GestionResourceException {
 		if(categorie==null){
-			throw new GestionResourceException("", "La categorie de reference "+referenceCategory+"  n'existe pas");
+			throw new GestionResourceException("La categorie de reference "+referenceCategory+"  n'existe pas","0.2.1" );
 		}
 	}
 
@@ -44,7 +44,7 @@ public class ResourceValidator {
 	 */
 	public static void checkResourceExist(String reference,Resource resource) throws GestionResourceException{
 		if(resource==null) {
-			throw new GestionResourceException("", "La resource de reference "+reference+"  n'existe pas");
+			throw new GestionResourceException("La resource de reference "+reference+"  n'existe pas","0.2.2");
 		}
 
 	}
@@ -59,10 +59,16 @@ public class ResourceValidator {
 	 */
 	public static  void checkReservationExist(String reference,Reservation reservation) throws GestionResourceException{
 		if(reservation==null){
-			throw new GestionResourceException("", "La resoreservationurce de reference "+reference+"  n'existe pas");
+			throw new GestionResourceException("La reservation  de reference "+reference+"  n'existe pas","0.2.3" );
 		}
 	}
 	
+	/**
+	 * 
+	 * @param referenceResource
+	 * @param reservation
+	 * @throws GestionResourceException
+	 */
 	public static void checkResourceAvailable(String referenceResource,Reservation reservation) throws GestionResourceException {
 		if(reservation != null){
 			throw new GestionResourceException("la resource "+referenceResource+" est accupee jusqu'a le "+reservation.getDateEnd(), "1.2");
@@ -154,6 +160,47 @@ public class ResourceValidator {
 
 		}
 		return result;
+	}
+	
+	/**
+	 * check if the category exist before adding it.
+	 * 
+	 * @param reference
+	 * @param categorie
+	 * @throws GestionResourceException
+	 */
+	public static void checkCategoryExistAlready(String reference, Categorie categorie) throws GestionResourceException {
+		
+		if(categorie != null ) {
+			throw new GestionResourceException("la categorie de reference "+reference+" existe deja", "0.1.1") ;
+		}
+		
+	}
+	
+	/**
+	 * * check if the resource exist before adding it.
+	 * 
+	 * @param reference
+	 * @param resource
+	 * @throws GestionResourceException
+	 */
+	public static void checkResourceExistAlready (String reference, Resource resource ) throws GestionResourceException {
+		if(resource != null ) {
+		throw new GestionResourceException("la resource de reference "+reference+" existe deja", "0.1.2") ;
+		}
+	}
+	
+	/**
+	 * * check if the reservation exist before adding it.
+	 * 
+	 * @param reference
+	 * @param reservation
+	 * @throws GestionResourceException
+	 */
+	public static void checkReservationExistAlready (String reference, Reservation reservation) throws GestionResourceException {
+		if( reservation !=null ) {
+			throw new GestionResourceException("la reservation  de reference "+reference+" existe deja", "0.1.2") ;
+		}
 	}
 
 }

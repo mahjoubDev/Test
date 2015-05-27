@@ -32,9 +32,10 @@ public class UserInfo {
 	public UserInfo() {
 	}
 
-	public UserInfo(String firstName, String lastName, String email,
+	public UserInfo(String login ,String firstName, String lastName, String email,
 			List<String> roles) {
 		super();
+		this.login = login ;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

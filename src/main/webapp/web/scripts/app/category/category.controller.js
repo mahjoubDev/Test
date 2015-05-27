@@ -7,6 +7,7 @@ angular.module('jhipsterApp')
         $scope.categorieInfo = {};
         $scope.itemsByPage = 5;
         $scope.toggle = '!toggle';
+        $scope.addCategoryError = false ;
 
         /**
          *
@@ -36,8 +37,11 @@ angular.module('jhipsterApp')
                     $scope.categories = Category.findAll();
                     // $route.reload();
                     $scope.showModalAdd = !$scope.showModalAdd;
+                    $scope.addCategoryError = false ;
 
                 }, function (error) {
+                    $scope.addCategoryError = true ;
+                    $scope.showModalAdd = !$scope.showModalAdd;
                     console.log("there is an error " + error);
                 }
             );

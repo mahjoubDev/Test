@@ -2,7 +2,7 @@
 
 angular.module('jhipsterApp', ['LocalStorageModule', 'tmh.dynamicLocale',
     'ngResource', 'ui.router', 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster',
-    'infinite-scroll', 'ngTable',  'smart-table'])
+    'infinite-scroll', 'ngTable',  'smart-table', 'ng-fusioncharts'])
 
     .run(function ($rootScope, $location, $window, $http, $state, $translate, Auth, Principal, Language, ENV, VERSION) {
         $rootScope.ENV = ENV;
@@ -40,13 +40,13 @@ angular.module('jhipsterApp', ['LocalStorageModule', 'tmh.dynamicLocale',
         $rootScope.back = function() {
             // If previous state is 'activate' or do not exist go to 'home'
             if ($rootScope.previousStateName === 'activate' || $state.get($rootScope.previousStateName) === null) {
-                $state.go('home');
+                $state.go('reservation');
             } else {
                 $state.go($rootScope.previousStateName, $rootScope.previousStateParams);
             }
         };
     })
-    
+
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $translateProvider, tmhDynamicLocaleProvider, httpRequestInterceptorCacheBusterProvider) {
 
         //enable CSRF
@@ -61,7 +61,7 @@ angular.module('jhipsterApp', ['LocalStorageModule', 'tmh.dynamicLocale',
         //Cache everything except rest api requests
         httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/], true);
 
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/reservation');
         $stateProvider.state('site', {
             'abstract': true,
             views: {

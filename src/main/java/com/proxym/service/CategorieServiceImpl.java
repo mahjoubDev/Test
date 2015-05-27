@@ -42,7 +42,8 @@ public class CategorieServiceImpl implements CategorieService{
 			throws GestionResourceException {
 		
 		LOGGER.debug("add new category to data base ", categorieInfo);
-		LOGGER.debug("my first example", categorieInfo);
+		Categorie categorie = categorieRepository.findByReference(categorieInfo.getReference()) ;
+		ResourceValidator.checkCategoryExistAlready(categorieInfo.getReference(), categorie);
 		categorieRepository.save(categorieInfo.toDomain());
 	}
 

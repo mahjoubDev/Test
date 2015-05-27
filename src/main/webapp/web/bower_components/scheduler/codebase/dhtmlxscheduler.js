@@ -1640,7 +1640,7 @@ window.dhtmlXScheduler = window.scheduler = {version: "4.3.1"}, window.dhtmlx ||
     for (var i = 0, s = e.length; s > i; i++)this._recalculate_timed(e[i]);
     if (this.config.multi_day && !this._table_view) {
         for (var a = [], n = [], i = 0; i < e.length; i++)this._is_main_area_event(e[i]) ? a.push(e[i]) : n.push(e[i]);
-        this._rendered_location = this._els.dhx_multi_day[0],
+      //  this._rendered_location = this._els.dhx_multi_day[0],
             this._table_view = !0, this.render_data(n, t), this._table_view = !1, this._rendered_location = this._els.dhx_cal_data[0], this._table_view = !1, this.render_data(a, t)
     } else this._rendered_location = this._els.dhx_cal_data[0], this.render_data(e, t)
 },scheduler._view_month_day = function (e) {

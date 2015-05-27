@@ -2,7 +2,7 @@
 
 angular.module('jhipsterApp')
     .factory('Resource', function ($resource) {
-        return $resource('http://localhost:9080/gestion-reservations-resources/proxym/resource/:reference/:action',
+        return $resource('http://localhost:8080/proxym/resource/:reference/:action',
             {}, {
                 'findAll': {
                     method: 'GET',

@@ -1,6 +1,7 @@
 {
   "category": {
     "title": "liste de Catgories",
+    "addNewCategory": "Ajouter une nouvelle categorie",
     "nbloggers": "Il ya   {{ total }} categories.",
     "filter": "Filter",
     "table": {

@@ -54,6 +54,10 @@ public class ResourceServiceImpl implements ResourceService {
 		LOGGER.debug("add new resource to data base ", resourceInfo);
 		Categorie ExistingCategory=categorieRepository.findByReference(resourceInfo.getReferenceCategory());
 		ResourceValidator.checkCategoryExist(resourceInfo.getReferenceCategory(), ExistingCategory);
+		
+		Resource resourceExist = resourceRepository.findByReference(resourceInfo.getReference()) ;
+		ResourceValidator.checkResourceExistAlready(resourceInfo.getReference(), resourceExist);
+		
 		Resource resource=resourceInfo.toDomain();
 		resource.setCategory(ExistingCategory);
 		resourceRepository.save(resource);

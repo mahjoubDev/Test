@@ -4,13 +4,16 @@
 
     <div class="span6 pull-right">
 
-        <button ng-click="toggleModalAdd()" class="btn btn-success">Add New Categories
+        <button ng-click="toggleModalAdd()" class="btn btn-success">Add New Resource
         </button>
     </div>
     <h1>&nbsp;</h1>
+    <div class="alert alert-danger" ng-show="addResourceError" >
+        <strong>Add resource  failed!</strong>The reference {{resourceInfo.reference}} exists always.
+    </div>
     <table st-table="categories" class="table table-bordered">
         <thead>
-        <tr class="alert alert-danger">
+        <tr class="alert alert-success">
             <th st-sort="nameCategory">Name resource</th>
             <th st-sort="reference">Reference resource</th>
             <th st-sort="nameCategory">description category</th>

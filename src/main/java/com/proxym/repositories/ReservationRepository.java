@@ -24,6 +24,12 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 	 */
 	public static final String GET_RESERVATION_WITH_ONLY_15_MINUTES_REMAINING = "select * from reservation where ((SELECT TIMESTAMPDIFF(MINUTE, date_start, date_end) "
 			+"as `difference` FROM reservation)>=15 );";
+	
+	/**
+	 * native query for getting the reservations before 15 minute of it's starting date.
+	 */
+	public static final String GET_RESERVATION_FOR_TARGET_RESOURCE = "select * from reservation r where r.resource.reference LIKE:reference and "
+			+ "" ;
 
 	/**
 	 * gets the reservation that matches the given reference.
@@ -69,5 +75,14 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 	 */
 	@Query(name="findByReferneceResource",value="SELECT r from Reservation r where r.resource.reference LIKE :reference")
 	public  List<Reservation> findByResource(@Param("reference") String reference) throws GestionResourceException ;
+
+	/**
+	 * gets the reservation using it's reservation.
+	 * 
+	 * @param reference reservation's refrence.
+	 * 
+	 * @return
+	 */
+	public Reservation findByReference(String reference);
 
 }

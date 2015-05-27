@@ -56,12 +56,16 @@ public class ReservationServiceImpl implements ReservationService {
 		Resource resource = resourceRepository.findByReference(reservationInfo.getReferenceResource());
 		ResourceValidator.checkResourceExist(reservationInfo.getReferenceResource(), resource);
 		
+		Reservation reservationExist = reservationRepository.findByReference(reservationInfo.getReference()) ;
+		ResourceValidator.checkReservationExistAlready(reservationInfo.getReference(), reservationExist);
+		
 		//check if the resource is available 
-//		Reservation reservationResource=reservationRepository.findByReferenceResource(resource.getReference());
-//		ResourceValidator.checkResourceAvailable(resource.getReference(), reservationResource);
-//
-//		// verify the possibility of the reservation.
-//		ResourceValidator.checkReservationPossible(resource, reservationInfo);
+		
+		Reservation reservationResource=reservationRepository.findByReferenceResource(resource.getReference());
+		ResourceValidator.checkResourceAvailable(resource.getReference(), reservationResource);
+
+		// verify the possibility of the reservation.
+		ResourceValidator.checkReservationPossible(resource, reservationInfo);
 
 		// add the new reservation to data base.
 		

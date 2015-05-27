@@ -4,9 +4,10 @@ angular.module('jhipsterApp')
     .controller('ResourceController', function ($scope, $http, Category, Resource) {
         $scope.showModalUpdate = false;
         $scope.showModalAdd = false;
-        $scope.categorieInfo = {};
+        $scope.resourceInfo = {};
         $scope.itemsByPage = 3;
         $scope.toggle = '!toggle';
+        $scope.addResourceError = false ;
         $scope.category = {
 
         }
@@ -58,6 +59,8 @@ angular.module('jhipsterApp')
                     $scope.resourceInfo = {};
 
                 }, function (error) {
+                    $scope.addResourceError = true ;
+                    $scope.showModalAdd = !$scope.showModalAdd;
                     console.log("there is an error " + error);
                 }
             );

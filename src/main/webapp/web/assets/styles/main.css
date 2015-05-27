@@ -183,4 +183,9 @@ ul#strength {
     color: black !important;
 }
 
+.chart {
+    width: 500px;
+    height: 500px;
+}
+
 /* end Password strength bar style */

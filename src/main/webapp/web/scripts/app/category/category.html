@@ -4,13 +4,19 @@
 
     <div class="span6 pull-right">
 
-        <button ng-click="toggleModalAdd()" class="btn btn-success">Add New Categories
+        <button ng-click="toggleModalAdd()" class="btn btn-success"
+                translate="category.addNewCategory">Add New Categories
         </button>
     </div>
     <h1>&nbsp;</h1>
+
+    <div class="alert alert-danger" ng-show="addCategoryError" >
+        <strong>Add category  failed!</strong>The reference {{categorieInfo.reference}} exists always.
+    </div>
+
     <table st-table="categories" class="table table-bordered">
         <thead>
-        <tr class="alert alert-danger">
+        <tr class="alert alert-success">
             <th st-sort="nameCategory">Name category</th>
             <th st-sort="reference">Reference category</th>
             <th st-sort="reference">Update category</th>

@@ -3,6 +3,7 @@
 angular.module('jhipsterApp')
     .controller('LanguageController', function ($scope, $translate, Language) {
         $scope.changeLanguage = function (languageKey) {
+            console.log('translation '+languageKey) ;
             $translate.use(languageKey);
         };
 
