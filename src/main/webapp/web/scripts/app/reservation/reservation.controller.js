@@ -38,12 +38,14 @@ angular.module('jhipsterApp')
                     $scope.showModalAdd = !$scope.showModalAdd;
                     $scope.reservationInfo = {};
                     $scope.addReservationError = false ;
+                    $scope.error = {};
 
 
                 }, function (error) {
                     $scope.addReservationError = true ;
                     $scope.error = error ;
                     $scope.showModalAdd = !$scope.showModalAdd;
+                    $scope.reservationInfo = {};
                     console.log("there is an error " + JSON.stringify(error));
                 }
             );
@@ -78,7 +80,7 @@ angular.module('jhipsterApp')
          * @param reference
          */
         $scope.update = function (reservationInfo) {
-
+            console.log(JSON.stringify(reservationInfo)) ;
             if (angular.isDefined(reservationInfo)) {
                 var promise = Reservation.update({referenceReservation: reservationInfo.reference}, reservationInfo).$promise;
                 promise.then(function (data) {
@@ -87,8 +89,13 @@ angular.module('jhipsterApp')
                     $scope.reservationInfo = {};
                     $scope.getReservationsByReferenceResources(reservationInfo.referenceResource);
                     $scope.showModalUpdate = !$scope.showModalUpdate;
+                    $scope.addReservationError = false ;
+                    $scope.error = {};
 
                 }, function (error) {
+                    $scope.addReservationError = true;
+                    $scope.error = error ;
+                    $scope.showModalUpdate = !$scope.showModalUpdate;
                     console.log("there is an error " + JSON.stringify(error));
                 });
 
@@ -165,7 +172,7 @@ angular.module('jhipsterApp')
          */
         $scope.getReservationsByReferenceResources = function (referenceResource) {
             console.log('call method get reservation by reference resource');
-            $scope.eventsResourceRelatedToResource = false;
+           // $scope.eventsResourceRelatedToResource = false;
             $scope.events = [];
             //  console.log('the sue '+Principal.isInRole('users')) ;
             var promise = Reservation.findByResource({referenceResource: referenceResource}).$promise;
@@ -187,6 +194,7 @@ angular.module('jhipsterApp')
                                     dateEnd.getMinutes(), dateEnd.getSeconds()),
                                 login: res.loginUser,
                                 resource: getResourceByReference(res.referenceResource),
+                                refResource : res.referenceResource,
                                 reference: res.reference
 
                             }
@@ -310,7 +318,7 @@ angular.module('jhipsterApp').directive('dhxScheduler', function () {
                     $scope.reservationInfo.dateEnd = ev.end_date.format("Y-m-d h:i:s");
                     $scope.reservationInfo.reference = ev.reference;
                     $scope.reservationInfo.id = ev.id;
-                    $scope.reservationInfo.referenceResource = ev.resource;
+                    $scope.reservationInfo.referenceResource = ev.refResource;
                     $scope.reservationInfo.loginUser = ev.login;
                     $scope.reservationInfo.description = ev.text;
                     $scope.$apply();

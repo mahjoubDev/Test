@@ -1,6 +1,7 @@
 package com.proxym.utils;
 
 import java.util.Date;
+import java.util.List;
 
 import com.proxym.business.ReservationInfo;
 import com.proxym.domain.Categorie;
@@ -97,26 +98,26 @@ public class ResourceValidator {
 
 			switch (resource.getTypeDate()) {
 			case HOUR: 
-				int hours=hoursDifference(dateStart, dateEnd,TypeDate.HOUR);
+				long hours=hoursDifference(dateStart, dateEnd,TypeDate.HOUR);
 				if(hours>dureeMax){
-					throw new GestionResourceException("La duree de reservation est superieure a la duree mas du resource"
+					throw new GestionResourceException("La duree de reservation est superieure a la duree max du resource"
 							+" nb: la duree max est :"+dureeMax+" heures", "1.1");
 				}
 				break;
 
 			case DAY :
-				int days=hoursDifference(dateStart, dateEnd,TypeDate.DAY);
+				long days=hoursDifference(dateStart, dateEnd,TypeDate.DAY);
 				if(days>dureeMax){
-					throw new GestionResourceException("La duree de reservation est superieure a la duree mas du resource"
+					throw new GestionResourceException("La duree de reservation est superieure a la duree max du resource"
 							+" nb: la duree max est :"+dureeMax+" jours", "1.1");
 				}
 				break;
 
 			case WEEK:
 
-				int weeks=hoursDifference(dateStart, dateEnd,TypeDate.WEEK);
+				long weeks=hoursDifference(dateStart, dateEnd,TypeDate.WEEK);
 				if(weeks>dureeMax){
-					throw new GestionResourceException("La duree de reservation est superieure a la duree mas du resource"
+					throw new GestionResourceException("La duree de reservation est superieure a la duree max du resource"
 							+" nb: la duree max est :"+dureeMax+" semaines", "1.1");
 				}
 				break;
@@ -137,25 +138,25 @@ public class ResourceValidator {
 	 * @param typeDate
 	 * @return
 	 */
-	private static  int hoursDifference(Date date1, Date date2,TypeDate typeDate) {
+	private static  long hoursDifference(Date date1, Date date2,TypeDate typeDate) {
 
 		final int MILLI_TO_HOUR = 1000 * 60 * 60;
 		final int MILLI_TO_DAY = MILLI_TO_HOUR*24;
 		final int MILLI_TO_WEEK = MILLI_TO_DAY*7;
 
-		int result=0;
+		long  result=0;
 		switch (typeDate) {
 
 		case HOUR:
-			result= (int) (date2.getTime() - date1.getTime()) / MILLI_TO_HOUR;
+			result=  (date2.getTime() - date1.getTime()) / MILLI_TO_HOUR;
 			break;
 
 		case DAY:
-			result= (int) (date2.getTime() - date1.getTime()) / MILLI_TO_DAY;
+			result=  (date2.getTime() - date1.getTime()) / MILLI_TO_DAY;
 			break;
 
 		case WEEK:
-			result= (int) (date2.getTime() - date1.getTime()) / MILLI_TO_WEEK;
+			result=  (date2.getTime() - date1.getTime()) / MILLI_TO_WEEK;
 			break;
 
 		}
@@ -200,6 +201,19 @@ public class ResourceValidator {
 	public static void checkReservationExistAlready (String reference, Reservation reservation) throws GestionResourceException {
 		if( reservation !=null ) {
 			throw new GestionResourceException("la reservation  de reference "+reference+" existe deja", "0.1.2") ;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param reservations
+	 * @param refResource
+	 * @throws GestionResourceException
+	 */
+	public static void checkReservationForResource (List<Reservation> reservations, String refResource ) throws GestionResourceException {
+		
+		if(reservations != null && reservations.size() != 0) {
+			throw new GestionResourceException("Il existe deja "+reservations.size()+ " reservations pour la resource de reference "+refResource +" veillerez changer la date ","0.1.3") ;
 		}
 	}
 

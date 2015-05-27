@@ -35,7 +35,7 @@ angular.module('jhipsterApp')
             promise.then(function (data) {
                     console.log('category has been added successfully')
                     $scope.categories = Category.findAll();
-                    // $route.reload();
+                    $scope.categorieInfo = {} ;
                     $scope.showModalAdd = !$scope.showModalAdd;
                     $scope.addCategoryError = false ;
 

@@ -1,12 +1,12 @@
 package com.proxym.repositories;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.proxym.business.ReservationInfo;
 import com.proxym.domain.Reservation;
 import com.proxym.exception.GestionResourceException;
 
@@ -28,8 +28,19 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 	/**
 	 * native query for getting the reservations before 15 minute of it's starting date.
 	 */
-	public static final String GET_RESERVATION_FOR_TARGET_RESOURCE = "select * from reservation r where r.resource.reference LIKE:reference and "
-			+ "" ;
+	public static final String GET_RESERVATION_FOR_TARGET_RESOURCE = "select * from reservation r where r.resource =:resource AND "
+			+ "( (r.date_start >= :dateStart AND r.date_start <= :dateEnd ) OR "
+			+ "(r.date_end >= :dateStart  AND r.date_end <= :dateEnd) OR"
+			+ "(r.date_start <= :dateStart AND r.date_end >= :dateEnd) )" ;
+	
+	/**
+	 * native query for getting the reservations before 15 minute of it's starting date.
+	 */
+	public static final String GET_RESERVATION_FOR_TARGET_RESOURCE_In_UPDATE = "select * from reservation r where r.resource =:resource AND "
+			+ " r.reference <> :reference AND"
+			+ "( (r.date_start >= :dateStart AND r.date_start <= :dateEnd ) OR "
+			+ "(r.date_end >= :dateStart  AND r.date_end <= :dateEnd) OR"
+			+ "(r.date_start <= :dateStart AND r.date_end >= :dateEnd) )" ;
 
 	/**
 	 * gets the reservation that matches the given reference.
@@ -84,5 +95,27 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 	 * @return
 	 */
 	public Reservation findByReference(String reference);
+	
+	/**
+	 * get the list of reservation for resource .
+	 * 
+	 * @param dateStart date start 
+	 * @param dateEnd  date end 
+	 * @return 
+	 * @throws GestionResourceException
+	 */
+	@Query(name="getReservationForResource" ,nativeQuery=true ,value = GET_RESERVATION_FOR_TARGET_RESOURCE)
+	public List<Reservation> getReservationForResource (@Param("dateStart") Date dateStart, @Param("dateEnd") Date dateEnd , @Param("resource") long resource) throws GestionResourceException  ;
+
+	/**
+	 * get the list of reservation for resource .
+	 * 
+	 * @param dateStart date start 
+	 * @param dateEnd  date end 
+	 * @return 
+	 * @throws GestionResourceException
+	 */
+	@Query(name="getReservationForResource" ,nativeQuery=true ,value = GET_RESERVATION_FOR_TARGET_RESOURCE_In_UPDATE)
+	public List<Reservation> getReservationForResourceInUpdate (@Param("dateStart") Date dateStart, @Param("dateEnd") Date dateEnd , @Param("resource") long resource, @Param("reference") String reference) throws GestionResourceException  ;
 
 }
