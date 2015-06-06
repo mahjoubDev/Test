@@ -47,7 +47,7 @@
         <tfoot>
         <tr>
             <td colspan="5" class="text-center">
-                <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+                <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5"></div>
             </td>
         </tr>
         </tfoot>
@@ -56,14 +56,14 @@
 
     <div>
         <modal title="Add category" visible="showModalAdd">
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" ng-submit="add(categorieInfo)" name="catAdd">
 
                 <div class="form-group">
                     <label for="refrenceCategory" class="col-sm-4 control-label">Reference Category </label>
 
                     <div class="col-sm-6">
                         <input class="form-control" id="refrenceCategory" placeholder="Reference category "
-                               ng-model="categorieInfo.reference">
+                               name="catRef"  ng-model="categorieInfo.reference" required>
                     </div>
                 </div>
 
@@ -72,13 +72,13 @@
 
                     <div class="col-sm-6">
                         <input class="form-control" id="nameCategorie" placeholder="Name category"
-                               ng-model="categorieInfo.nameCategorie">
+                               ng-model="categorieInfo.nameCategorie" required>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success" ng-click="add()">Add</button>
+                        <button type="submit" class="btn btn-success" ">Add</button>
                     </div>
                 </div>
 

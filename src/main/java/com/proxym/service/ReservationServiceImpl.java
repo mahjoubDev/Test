@@ -1,5 +1,6 @@
 package com.proxym.service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class ReservationServiceImpl implements ReservationService {
 	 * .ReservationInfo)
 	 */
 	public void addReservation(ReservationInfo reservationInfo)
-			throws GestionResourceException {
+			throws GestionResourceException, ParseException {
 
 		LOGGER.debug("add new reservation to data base ", reservationInfo);
 
@@ -70,16 +71,19 @@ public class ReservationServiceImpl implements ReservationService {
 		ResourceValidator.checkReservationExistAlready(
 				reservationInfo.getReference(), reservationExist);
 
-		// check if the resource is available
-
-		List<Reservation> reservations = reservationRepository
-				.getReservationForResource(reservationInfo.getDateStart(),
-						reservationInfo.getDateEnd(), resource.getId());
-		ResourceValidator.checkReservationForResource(reservations,
-				reservationInfo.getReferenceResource());
+		
 
 		// verify the possibility of the reservation.
 		ResourceValidator.checkReservationPossible(resource, reservationInfo);
+		
+		// check if the resource is available
+
+				List<Reservation> reservations = reservationRepository
+						.getReservationForResource(reservationInfo.getDateStart(),
+								reservationInfo.getDateEnd(), resource.getId());
+				ResourceValidator.checkReservationForResource(reservations,
+						reservationInfo.getReferenceResource());
+				
 
 		// add the new reservation to data base.
 		Reservation reservation = reservationInfo.toDomain();
@@ -98,7 +102,7 @@ public class ReservationServiceImpl implements ReservationService {
 	 */
 	@Transactional
 	public void updateReservation(String referenceReservation, ReservationInfo reservationInfo)
-			throws GestionResourceException {
+			throws GestionResourceException, ParseException {
 
 		LOGGER.debug("upadte existing reservation to data base ", reservationInfo);
 

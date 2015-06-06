@@ -1,5 +1,6 @@
 package com.proxym.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -46,10 +47,11 @@ public class ReservationController extends AbstractRestHandler {
 	 * 
 	 * @param reservationInfo
 	 * @throws GestionResourceException
+	 * @throws ParseException 
 	 */
 	@RequestMapping(value="/add",method=RequestMethod.POST,produces = "application/json")
 	@ApiOperation(value = "Create new booking", notes = "Create new booking booking")
-	public void addReservation (@RequestBody ReservationInfo reservationInfo) throws GestionResourceException{
+	public void addReservation (@RequestBody ReservationInfo reservationInfo) throws GestionResourceException, ParseException{
 		
 		LOGGER.debug("adding new reservation from controller ", reservationInfo);
 		reservationService.addReservation(reservationInfo);
@@ -61,10 +63,11 @@ public class ReservationController extends AbstractRestHandler {
 	 * 
 	 * @param reservationInfo
 	 * @throws GestionResourceException
+	 * @throws ParseException 
 	 */
 	@RequestMapping(value="/{referenceReservation:.+}/update",method=RequestMethod.POST,produces = "application/json")
 	@ApiOperation(value = "Update existing booking", notes = "Update existing booking")
-	public void updateReservation (@PathVariable String referenceReservation, @RequestBody ReservationInfo reservationInfo) throws GestionResourceException{
+	public void updateReservation (@PathVariable String referenceReservation, @RequestBody ReservationInfo reservationInfo) throws GestionResourceException, ParseException{
 		
 		LOGGER.debug("updating  existing  reservation from controller ", referenceReservation,reservationInfo);
 		reservationService.updateReservation(referenceReservation,reservationInfo);

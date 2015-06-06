@@ -61,23 +61,23 @@
 
     <div>
         <modal title="Add Resource " visible="showModalAdd">
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" name="resAdd" ng-submit="add(resourceInfo)">
 
                 <div class="form-group">
-                    <label for="refrenceResource" class="col-sm-4 control-label">Reference resource </label>
+                    <label for="refrenceResource" class="col-sm-4 control-label pull-left">Reference resource </label>
 
                     <div class="col-sm-6">
-                        <input class="form-control" id="refrenceResource" placeholder="Reference category "
-                               ng-model="resourceInfo.reference">
+                        <input class="form-control" id="refrenceResourceAdd" placeholder="Reference resource "
+                               ng-model="resourceInfo.reference" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="nameResource" class="col-sm-4 control-label">name resource</label>
+                    <label for="nameResource" class="col-sm-4 control-label pull-left">name resource</label>
 
                     <div class="col-sm-6">
-                        <input class="form-control" id="nameResource" placeholder="Name category"
-                               ng-model="resourceInfo.name">
+                        <input class="form-control" id="nameResourceAdd" placeholder="Name resource"
+                               ng-model="resourceInfo.name" required>
                     </div>
                 </div>
 
@@ -85,8 +85,8 @@
                     <label for="descriptionCategory" class="col-sm-4 control-label">Description Category </label>
 
                     <div class="col-sm-6">
-                        <input class="form-control" id="descriptionCategory" placeholder="Reference category "
-                               ng-model="resourceInfo.description">
+                        <input class="form-control" id="descriptionResource" placeholder="Description resource "
+                               ng-model="resourceInfo.description" required>
                     </div>
                 </div>
 
@@ -95,7 +95,7 @@
 
                     <div class="col-sm-6">
                         <select ng-model="resourceInfo.referenceCategory" name="category" style="display: inline-block;"
-                                class="form-control" id="referenceCategory">
+                                class="form-control" id="Category" required>
                             <option ng-repeat="category in categories" value="{{category.reference}}">
                                 {{category.nameCategorie}}
                             </option>
@@ -107,7 +107,7 @@
                     <label for="typeDate" class="col-sm-4 control-label">Type date </label>
 
                     <div class="col-sm-6">
-                        <select ng-model="resourceInfo.typeDate" id="typeDate" class="form-control">
+                        <select ng-model="resourceInfo.typeDate" id="typeDate" class="form-control" required>
                             <option value="HOUR" selected="selected">HOUR</option>
                             <option value="DAY">DAY</option>
                             <option value="WEEK">WEEK</option>
@@ -119,14 +119,14 @@
                     <label for="dureeMax" class="col-sm-4 control-label">Duree max</label>
 
                     <div class="col-sm-6">
-                        <input class="form-control" id="dureeMax" placeholder="Name category"
+                        <input class="form-control" id="dureeMax" placeholder="Duree Max"
                                ng-model="resourceInfo.dureeMax">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success" ng-click="add(resourceInfo)">Add</button>
+                        <button type="submit" class="btn btn-success" >Add</button>
                     </div>
                 </div>
 

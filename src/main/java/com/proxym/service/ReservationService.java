@@ -1,5 +1,6 @@
 package com.proxym.service;
 
+import java.text.ParseException;
 import java.util.List;
 
 import com.proxym.business.ReservationInfo;
@@ -21,8 +22,9 @@ public interface ReservationService {
 	 * 
 	 * @param reservationInfo
 	 * @throws GestionResourceException indicates there is a problem.
+	 * @throws ParseException 
 	 */
-	public void addReservation (ReservationInfo reservationInfo) throws GestionResourceException;
+	public void addReservation (ReservationInfo reservationInfo) throws GestionResourceException, ParseException;
 	
 	/**
 	 * update existing reservation.
@@ -32,8 +34,9 @@ public interface ReservationService {
 	 *  
 	 * @param referenceReservation refrence of the target reservation.
 	 * @throws GestionResourceException indicates there is a problem.
+	 * @throws ParseException 
 	 */
-	public void updateReservation (String referenceReservation,ReservationInfo reservationInfo) throws GestionResourceException;
+	public void updateReservation (String referenceReservation,ReservationInfo reservationInfo) throws GestionResourceException, ParseException;
 	
 	/**
 	 * delete existing reservation.

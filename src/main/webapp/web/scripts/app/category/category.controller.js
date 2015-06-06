@@ -20,31 +20,22 @@ angular.module('jhipsterApp')
         /**
          *
          */
-        $scope.add = function () {
-            console.log('call method add category');
-            var categorieInfo = {
-                "nameCategorie": $scope.nameCategorie,
-                "reference": $scope.reference
-            };
-            console.log(categorieInfo);
+        $scope.add = function (categorieInfo) {
+            console.log('call method add category   '+JSON.stringify(categorieInfo));
+                var promise = Category.add({}, categorieInfo).$promise;
+                promise.then(function (data) {
+                        console.log('category has been added successfully')
+                        $scope.categories = Category.findAll();
+                        $scope.categorieInfo = {};
+                        $scope.showModalAdd = !$scope.showModalAdd;
+                        $scope.addCategoryError = false;
 
-            var promise = Category.add({}, {
-                "nameCategorie": $scope.categorieInfo.nameCategorie,
-                "reference": $scope.categorieInfo.reference
-            }).$promise;
-            promise.then(function (data) {
-                    console.log('category has been added successfully')
-                    $scope.categories = Category.findAll();
-                    $scope.categorieInfo = {} ;
-                    $scope.showModalAdd = !$scope.showModalAdd;
-                    $scope.addCategoryError = false ;
-
-                }, function (error) {
-                    $scope.addCategoryError = true ;
-                    $scope.showModalAdd = !$scope.showModalAdd;
-                    console.log("there is an error " + error);
-                }
-            );
+                    }, function (error) {
+                        $scope.addCategoryError = true;
+                        $scope.showModalAdd = !$scope.showModalAdd;
+                        console.log("there is an error " + error);
+                    }
+                );
         };
 
         /**

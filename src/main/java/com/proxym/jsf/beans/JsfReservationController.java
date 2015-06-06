@@ -1,5 +1,6 @@
 package com.proxym.jsf.beans;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -58,7 +59,7 @@ public class JsfReservationController {
 		
 	}
 	
-	public void addReservation () throws GestionResourceException {
+	public void addReservation () throws GestionResourceException, ParseException {
 		
 		LOGGER.debug("add ne reservation ");
 		if(reservationToAdd!=null && reservationToAdd.getResource()!=null) {
