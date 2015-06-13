@@ -22,6 +22,10 @@ angular.module('jhipsterApp')
             $scope.account = response;
 
         });
+        $('#resourceReservation').chosen() ;
+        $('#categoryReservation').chosen() ;
+
+
 
 
         /**
@@ -35,7 +39,6 @@ angular.module('jhipsterApp')
 
                     console.log('reservation has been added successfully')
                     $scope.reservations = Reservation.findAll();
-                    $scope.showModalAdd = !$scope.showModalAdd;
                     $scope.reservationInfo = {};
                     $scope.addReservationError = false ;
                     $scope.error = {};
@@ -44,7 +47,6 @@ angular.module('jhipsterApp')
                 }, function (error) {
                     $scope.addReservationError = true ;
                     $scope.error = error ;
-                    $scope.showModalAdd = !$scope.showModalAdd;
                     $scope.reservationInfo = {};
                     console.log("there is an error " + JSON.stringify(error));
                 }
@@ -172,12 +174,12 @@ angular.module('jhipsterApp')
          */
         $scope.getReservationsByReferenceResources = function (referenceResource) {
             console.log('call method get reservation by reference resource');
-           // $scope.eventsResourceRelatedToResource = false;
             $scope.events = [];
             //  console.log('the sue '+Principal.isInRole('users')) ;
             var promise = Reservation.findByResource({referenceResource: referenceResource}).$promise;
             promise.then(function (data) {
                     $scope.reservationForResource = data;
+                    $scope.eventsResourceRelatedToResource = true;
                     if (data.length !== 0) {
                         var reservs = data;
                         for (var i = 0; i < reservs.length; i++) {
@@ -195,13 +197,13 @@ angular.module('jhipsterApp')
                                 login: res.loginUser,
                                 resource: getResourceByReference(res.referenceResource),
                                 refResource : res.referenceResource,
-                                reference: res.reference
+                                reference: res.reference ,
+                                description :res.description
 
                             }
                             $scope.events.push(event);
 
                         }
-                        $scope.eventsResourceRelatedToResource = true;
                     }
 
 
@@ -284,7 +286,13 @@ angular.module('jhipsterApp')
             }
         );
 
-
+        /**
+         *
+         */
+        $scope.initialize = function () {
+            console.log("call initialize")
+            $scope.reservationInfo = {};
+        };
 
         //======================================================================================================
         //-----------------------------------    Calendar  ------------------------------------------------------
@@ -314,16 +322,20 @@ angular.module('jhipsterApp').directive('dhxScheduler', function () {
                 console.log('double clik ');
                 var ev = scheduler.getEvent(id);
                     $scope.event = ev;
-                    $scope.reservationInfo.dateStart = ev.start_date.format("Y-m-d h:i:s");
-                    $scope.reservationInfo.dateEnd = ev.end_date.format("Y-m-d h:i:s");
+                    $scope.reservationInfo.dateStart = ev.start_date.format("Y-m-d H:i:s");
+                    $scope.reservationInfo.dateEnd = ev.end_date.format("Y-m-d H:i:s");
                     $scope.reservationInfo.reference = ev.reference;
                     $scope.reservationInfo.id = ev.id;
                     $scope.reservationInfo.referenceResource = ev.refResource;
                     $scope.reservationInfo.loginUser = ev.login;
-                    $scope.reservationInfo.description = ev.text;
+                    $scope.reservationInfo.description = ev.description;
                     $scope.$apply();
                     $scope.$apply(" showModalUpdate = !showModalUpdate");
-                return true;
+                return false;
+            });
+
+            scheduler.attachEvent("onClick", function (id, e){
+                return false;
             });
 
             var dragged_event;
@@ -375,6 +387,8 @@ angular.module('jhipsterApp').directive('dhxScheduler', function () {
             scheduler.config.touch = true;
             scheduler.config.drag_out = false ;
             scheduler.config.drag_in = false ;
+            scheduler.config.hour_date = "%H:%i:%s";
+
             scheduler.templates.event_class = function (start, end, event) {
                 if (event.type == 'manager') return "manager_event";
                 return "employee_event";
@@ -388,6 +402,8 @@ angular.module('jhipsterApp').directive('dhxScheduler', function () {
         }
 
     }
+
+
 });
 
 angular.module('jhipsterApp').directive('dhxTemplate', ['$filter', function ($filter) {

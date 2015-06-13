@@ -8,7 +8,6 @@ angular.module('jhipsterApp')
         $scope.itemsByPage = 5;
         $scope.toggle = '!toggle';
         $scope.addCategoryError = false ;
-
         /**
          *
          */
@@ -16,6 +15,16 @@ angular.module('jhipsterApp')
             console.log('categorie ' + JSON.stringify(response));
             $scope.categories = response;
         });
+
+        $scope.deleteItem = function(item){
+            var msgbox = $dialog.messageBox('Delete Item', 'Are you sure?', [{label:'Yes, I\'m sure', result: 'yes'},{label:'Nope', result: 'no'}]);
+            msgbox.open().then(function(result){
+                if(result === 'yes') {
+                    //code to delete here
+                    console.log("deleting item " + item.name);
+                }
+            });
+        };
 
         /**
          *
@@ -27,12 +36,13 @@ angular.module('jhipsterApp')
                         console.log('category has been added successfully')
                         $scope.categories = Category.findAll();
                         $scope.categorieInfo = {};
-                        $scope.showModalAdd = !$scope.showModalAdd;
                         $scope.addCategoryError = false;
 
                     }, function (error) {
                         $scope.addCategoryError = true;
-                        $scope.showModalAdd = !$scope.showModalAdd;
+                        alert( "<div class='alert alert-danger'>"+
+                            "<strong>Add category failed!</strong>The reference {{categorieInfo.reference}} exists always."+
+                       " </div>") ;
                         console.log("there is an error " + error);
                     }
                 );
@@ -99,6 +109,10 @@ angular.module('jhipsterApp')
 
         $scope.cancel = function () {
             $scope.showModalUpdate = false;
+        };
+
+        $scope.initialize = function () {
+            $scope.categorieInfo = {};
         };
 
 

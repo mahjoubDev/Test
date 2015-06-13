@@ -1,123 +1,137 @@
-<div class="content">
+<div class="row" style="padding-top: 2%;">
+    <div class="container row col-lg-3 ">
+        <div class=" row col-lg-10 " style="padding-left: 7%;">
+            <div class="panel panel-primary  ">
 
-    <h2 translate="category.title" class="btn-toolbar">categories</h2>
+                <div class="panel-heading">
+                    Add Category
+                </div>
+                <div class="panel-body">
+                    <div class="row" style="padding-left: 5%;">
+                        <form class="form-horizontal" role="form" name="catAdd" data-toggle="validator">
 
-    <div class="span6 pull-right">
+                            <div class="form-group">
 
-        <button ng-click="toggleModalAdd()" class="btn btn-success"
-                translate="category.addNewCategory">Add New Categories
-        </button>
+                                <div class="col-sm-11 center">
+                                    <input class="form-control" placeholder="Reference category "
+                                         type="text"  name="catRef" ng-model="categorieInfo.reference" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-sm-11 center">
+                                    <input class="form-control" placeholder="Name category"
+                                           ng-model="categorieInfo.nameCategorie" required>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div style="margin-left: 10px;">
+
+                <button class="btn btn-large btn-success"  ng-click="add(categorieInfo)">
+                    <span class="glyphicon glyphicon-search"></span> <span
+                       >Ajouter</span>
+                </button>
+
+
+                <button class="btn btn-large btn-success"  ng-click="initialize()">
+                    <span class="glyphicon glyphicon-refresh"></span> <span
+                       >Inialiser</span>
+                </button>
+
+            </div>
+        </div>
     </div>
-    <h1>&nbsp;</h1>
-
-    <div class="alert alert-danger" ng-show="addCategoryError" >
-        <strong>Add category  failed!</strong>The reference {{categorieInfo.reference}} exists always.
-    </div>
-
-    <table st-table="categories" class="table table-bordered">
-        <thead>
-        <tr class="alert alert-success">
-            <th st-sort="nameCategory">Name category</th>
-            <th st-sort="reference">Reference category</th>
-            <th st-sort="reference">Update category</th>
-            <th st-sort="reference">Delete category</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="row in categories" class="alert-info alert-warning">
-            <td>{{row.nameCategorie | uppercase}}</td>
-            <td>{{row.reference}}</td>
-            <td>
-                <p data-placement="top" data-toggle="tooltip" title="Edit">
-                    <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"
-                            ng-click="toggleModalUpdate(row)">
-                        <span class="glyphicon glyphicon-pencil"></span></button>
-                </p>
-            </td>
-            <td>
-                <p data-placement="top" data-toggle="tooltip" title="Delete">
-                    <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"
-                            ng-click="delete(row)">
-                        <span class="glyphicon glyphicon-trash"></span></button>
-                </p>
-            </td>
-
-        </tr>
-        </tbody>
-        <tfoot>
-        <tr>
-            <td colspan="5" class="text-center">
-                <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5"></div>
-            </td>
-        </tr>
-        </tfoot>
-    </table>
+    <div class="container row col-lg-9">
 
 
-    <div>
-        <modal title="Add category" visible="showModalAdd">
-            <form class="form-horizontal" role="form" ng-submit="add(categorieInfo)" name="catAdd">
+        <div class="alert alert-danger" ng-show="addCategoryError">
+            <strong>Add category failed!</strong>The reference {{categorieInfo.reference}} exists always.
+        </div>
+        <div class="panel panel-primary ">
 
-                <div class="form-group">
-                    <label for="refrenceCategory" class="col-sm-4 control-label">Reference Category </label>
+            <div class="panel-heading">
+                <span translate="category.title" >categories</span>
+            </div>
+            <div class="panel-body">
 
-                    <div class="col-sm-6">
-                        <input class="form-control" id="refrenceCategory" placeholder="Reference category "
-                               name="catRef"  ng-model="categorieInfo.reference" required>
-                    </div>
-                </div>
+        <table st-safe-src="rowCollection" st-table="categories" class="table table-striped table-bordered table-hover dataTable no-footer" style="background-color: #FFFFFF">
+            <thead>
+            <tr class="alert alert-info">
+                <th st-sort="nameCategory">Name category</th>
+                <th st-sort="reference">Reference category</th>
+                <th st-sort="reference">Update category</th>
+                <th st-sort="reference">Delete category</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in categories" class="alert-info alert-warning">
+                <td>{{row.nameCategorie | uppercase}}</td>
+                <td>{{row.reference}}</td>
+                <td>
+                    <p data-placement="top" data-toggle="tooltip" title="Edit">
+                        <button class="btn btn-info btn-xs center-block" data-title="Edit" data-toggle="modal" data-target="#edit"
+                                ng-click="toggleModalUpdate(row)">
+                            <span class="glyphicon glyphicon-pencil"></span></button>
+                    </p>
+                </td>
+                <td>
+                    <p data-placement="top" data-toggle="tooltip" title="Delete">
+                        <button class="btn btn-danger btn-xs center-block" data-title="Delete" data-toggle="modal"
+                                data-target="#delete"
+                                ng-click="deleteItem(row)">
+                            <span class="glyphicon glyphicon-trash"></span></button>
+                    </p>
+                </td>
 
-                <div class="form-group">
-                    <label for="nameCategorie" class="col-sm-4 control-label">name category</label>
+            </tr>
+            </tbody>
+            <!--<tfoot>-->
+            <!--<tr>-->
+                <!--<td colspan="5" class="text-center">-->
+                    <!--<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5"></div>-->
+                <!--</td>-->
+            <!--</tr>-->
+            <!--</tfoot>-->
+        </table>
+            </div>
+        </div>
 
-                    <div class="col-sm-6">
-                        <input class="form-control" id="nameCategorie" placeholder="Name category"
-                               ng-model="categorieInfo.nameCategorie" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success" ">Add</button>
-                    </div>
-                </div>
-
-
-            </form>
-        </modal>
-        <div>
-
-            <div>
-                <modal title="Update category" visible="showModalUpdate">
-                    <form class="form-horizontal" role="form">
-
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-4 control-label">Reference Category </label>
-
-                            <div class="col-sm-6">
-                                <input class="form-control" id="inputEmail3" placeholder="Reference category "
-                                       ng-model="selectedCategory.reference" disabled="true">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputName3" class="col-sm-4 control-label">name category</label>
-
-                            <div class="col-sm-6">
-                                <input class="form-control" id="inputName3" placeholder="Name category"
-                                       ng-model="selectedCategory.nameCategorie">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-success" ng-click="update()">Update</button>
-                            </div>
-                        </div>
-
-
-                    </form>
-                </modal>
                 <div>
+                    <modal title="Update category" visible="showModalUpdate">
+                        <form class="form-horizontal" role="form">
 
-                </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Reference Category </label>
+
+                                <div class="col-sm-6">
+                                    <input class="form-control" id="inputEmail3" placeholder="Reference category "
+                                           ng-model="selectedCategory.reference" disabled="true">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputName3" class="col-sm-4 control-label">name category</label>
+
+                                <div class="col-sm-6">
+                                    <input class="form-control" id="inputName3" placeholder="Name category"
+                                           ng-model="selectedCategory.nameCategorie">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-success" ng-click="update()">Update</button>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </modal>
+                    <div>
+

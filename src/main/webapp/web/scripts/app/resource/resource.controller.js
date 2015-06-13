@@ -8,9 +8,10 @@ angular.module('jhipsterApp')
         $scope.itemsByPage = 3;
         $scope.toggle = '!toggle';
         $scope.addResourceError = false ;
-        $scope.category = {
-
-        }
+        $scope.category = {} ;
+        $scope.typeDates = ['HOUR','DAY','WEEK'] ;
+        $("#typeDateAdd").chosen() ;
+        $("#categoryAdd").chosen() ;
 
         /**
          *
@@ -49,18 +50,15 @@ angular.module('jhipsterApp')
          */
         $scope.add = function (resourceInfo) {
             console.log('call method add resource');
-            console.log("resourceInfo   " +JSON.stringify(resourceInfo));
 
             var promise = Resource.add({},resourceInfo).$promise;
             promise.then(function (data) {
                     console.log('resource has been added successfully')
                     $scope.resources = Resource.findAll();                    // $route.reload();
-                    $scope.showModalAdd = !$scope.showModalAdd;
                     $scope.resourceInfo = {};
 
                 }, function (error) {
                     $scope.addResourceError = true ;
-                    $scope.showModalAdd = !$scope.showModalAdd;
                     console.log("there is an error " + error);
                 }
             );
@@ -127,6 +125,10 @@ angular.module('jhipsterApp')
             $scope.showModalUpdate = false;
         };
 
+
+        $scope.initialize = function () {
+            $scope.reservationInfo = {};
+        };
 
     });
 

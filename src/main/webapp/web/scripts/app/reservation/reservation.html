@@ -1,26 +1,128 @@
-<div class="content">
+<div class="row" style="padding-top: 2%;">
+    <div class="container row col-lg-3 ">
+        <div class=" row col-lg-10 " style="padding-left: 7%;">
+            <div class="panel panel-primary  " style="height :410px;">
 
-    <h2 translate="reservation.title" class="btn-toolbar">reservations </h2>
+                <div class="panel-heading">
+                    Add Reservation
+                </div>
+                <div class="panel-body">
+                    <div class="row" style="padding-left: 5%;">
+                        <form class="form-horizontal" role="form" ng-submit="add(categorieInfo)" name="catAdd">
 
-    <div class="span6 pull-right">
+                            <div class="form-group">
 
-        <button ng-click="toggleModalAdd()" class="btn btn-success">Add New reservation
-        </button>
+                                <div class="col-sm-11">
+                                    <input class="form-control"  placeholder="Reference Reservation "
+                                           ng-model="reservationInfo.reference">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-sm-11">
+                                    <input class="form-control"  placeholder="Date start" jqdatepicker
+                                           ng-model="reservationInfo.dateStart">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-sm-11">
+                                    <input type="text" class="form-control"  placeholder="Date end "
+                                           ng-model="reservationInfo.dateEnd" jqdatepicker>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-sm-11">
+                                    <input class="form-control"  placeholder="Description"
+                                           ng-model="reservationInfo.description">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-sm-11">
+                                    <input class="form-control"  placeholder="login" disabled ="true"
+                                           ng-model="account.login">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-sm-11">
+                                    <select chosen  name="category" ng-model="categoryForResourceAdd"
+                                             style="display: inline-block;"
+                                            data-placeholder="select category"
+                                            id="categoryReservation"
+                                             class="form-control"
+                                            ng-options="category.reference as category.nameCategorie  for category in categories
+                                            track by category.reference">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-sm-11">
+                                    <select chosen  ng-model="reservationInfo.referenceResource" name="resource" placeholder="login"
+                                            style="display: inline-block;"
+                                            data-placeholder="select category" ,
+                                            id="resourceReservation"
+                                            class="form-control" ng-options="resource.reference as resource.name  for resource in resourcesByCategoryForAdd
+                                            track by resource.reference" >
+
+
+                                    </select>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div style="margin-left: 10px;">
+
+                <button class="btn btn-large btn-success" ng-click="add(reservationInfo)">
+                    <span class="glyphicon glyphicon-plus"></span> <span
+                        >Ajouter</span>
+                </button>
+
+
+                <button class="btn btn-large btn-success" ng-click="initialize()" >
+                    <span class="glyphicon glyphicon-refresh"></span> <span>  Inialiser</span>
+                </button>
+
+            </div>
+        </div>
     </div>
+    <div class="container row col-lg-9">
+
 
     <div class="alert alert-danger" ng-show="addReservationError" >
         <strong>Add reservation  failed!</strong>{{error.data.errorMessage}}.
 
     </div>
+        <div class="panel panel-primary"  style="height :410px;">
 
-    <button type="button" class="btn btn-default " ng-click="collapse = !collapse"
-            ng-class="(!collapse && 'glyphicon glyphicon-eye-open') || (collapse && 'glyphicon glyphicon-eye-close')" data-toggle="collapse"
-            data-target="#cat" ></button>
+            <div class="panel-heading">
+                <span  >List of category and resources</span>
+            </div>
+            <div class="panel-body">
+
+    <!--<button type="button" class="btn btn-default " ng-click="collapse = !collapse"-->
+            <!--ng-class="(!collapse && 'glyphicon glyphicon-eye-open') || (collapse && 'glyphicon glyphicon-eye-close')" data-toggle="collapse"-->
+            <!--data-target="#cat" ></button>-->
     <div class="row" id="cat" class="collapse in">
         <div class=" col-sm-1 ">
         </div>
 
-        <div class="col-sm-4 ">
+        <div class="col-sm-5 ">
             <div class="well">
                 <ul class="nav">
                     <li class="alert alert-info"><strong>Select a Category</strong></li>
@@ -32,10 +134,10 @@
             <!--/.well -->
         </div>
         <!--/span-->
-        <div class=" col-sm-2 ">
+        <div class=" col-sm-1 ">
         </div>
 
-        <div class="col-sm-4 " id="resource" role="navigation" ng-show="showResourceRelatedToCtagory">
+        <div class="col-sm-5 " id="resource" role="navigation" ng-show="showResourceRelatedToCtagory">
             <div class="well ">
                 <ul class="nav">
                     <li class="alert alert-info"><strong>Select a Resource</strong></li>
@@ -59,24 +161,7 @@
 <div>
     &nbsp;
 </div>
-<div class="alert-danger col-lg-12 text-center" ng-show="eventsResourceRelatedToResource">
-    <h4> calendar events </h4>
-</div>
-<div dhx-scheduler style="height: 750px;; width:100%;" data="events" class="alert alert-warning"
-     ng-show="eventsResourceRelatedToResource">
-    <div class="dhx_cal_prev_button alert-danger">&nbsp;</div>
-    <div class="dhx_cal_next_button">&nbsp;</div>
-    <div class="dhx_cal_today_button"></div>
-    <div class="dhx_cal_date"></div>
-    <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
-    <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
-    <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
 
-    <div dhx-template="event_bar_text">
-        <strong>#{{event.id}}</strong>: {{event.text | uppercase}}
-    </div>
-
-</div>
 
 <div>
     <modal title="Add Reservation " id="custom_form" visible="showModalAdd">
@@ -225,7 +310,7 @@
 
                 <div class="col-sm-6">
                     <input class="form-control" id="resourceUpdate" placeholder="Resource"
-                           ng-model="reservationInfo.referenceResource.name" disabled="true">
+                           ng-model="reservationInfo.referenceResource" disabled="true">
                 </div>
             </div>
             <div class="form-group center-block">
@@ -268,7 +353,31 @@
 </modal>
 
 
-
-
+</div>
+</div>
+</div>
+</div>
 </div>
 
+<div class="col-sm-1" ng-show="eventsResourceRelatedToResource">
+    &nbsp;&nbsp;
+</div>
+
+<div class="btn-primary col-lg-12 text-center" ng-show="eventsResourceRelatedToResource">
+    <h4> calendar events </h4>
+</div>
+<div dhx-scheduler style="height: 350px;; width:100%;" data="events" class="alert alert-warning"
+     ng-show="eventsResourceRelatedToResource">
+    <div class="dhx_cal_prev_button alert-danger">&nbsp;</div>
+    <div class="dhx_cal_next_button">&nbsp;</div>
+    <div class="dhx_cal_today_button"></div>
+    <div class="dhx_cal_date"></div>
+    <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+    <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+    <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+
+    <div dhx-template="event_bar_text">
+        <strong>#{{event.id}}</strong>: {{event.text | uppercase}}
+    </div>
+
+</div>
