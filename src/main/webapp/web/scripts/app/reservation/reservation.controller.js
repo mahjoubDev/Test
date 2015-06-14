@@ -24,6 +24,9 @@ angular.module('jhipsterApp')
         });
         $('#resourceReservation').chosen() ;
         $('#categoryReservation').chosen() ;
+        $scope.checkForUpdate = false ;
+        $scope.showModalError = false;
+        $scope.showModalDelete = false;
 
 
 
@@ -32,25 +35,35 @@ angular.module('jhipsterApp')
          *
          */
         $scope.add = function (reservationInfo) {
+            console.log('call add reservation')
 
             reservationInfo.loginUser = $scope.account.login ;
-            var promise = Reservation.add({}, reservationInfo).$promise;
-            promise.then(function (data) {
+            if (angular.isDefined(reservationInfo.reference) && angular.isDefined(reservationInfo.dateStart)
+                && angular.isDefined(reservationInfo.description) && angular.isDefined($scope.categoryForResourceAdd)
+                && angular.isDefined(reservationInfo.dateEnd) && angular.isDefined(reservationInfo.referenceResource)) {
+                var promise = Reservation.add({}, reservationInfo).$promise;
+                promise.then(function (data) {
 
-                    console.log('reservation has been added successfully')
-                    $scope.reservations = Reservation.findAll();
-                    $scope.reservationInfo = {};
-                    $scope.addReservationError = false ;
-                    $scope.error = {};
+                        console.log('reservation has been added successfully')
+                        $scope.reservations = Reservation.findAll();
+                        $scope.reservationInfo = {};
+                        $scope.addReservationError = false;
+                        $scope.error = {};
+                        $scope.showModalSucess = !$scope.showModalSucess;
 
 
-                }, function (error) {
-                    $scope.addReservationError = true ;
-                    $scope.error = error ;
-                    $scope.reservationInfo = {};
-                    console.log("there is an error " + JSON.stringify(error));
-                }
-            );
+                    }, function (error) {
+                        $scope.addReservationError = true;
+                        $scope.showModalError = true;
+                        $scope.error = error;
+                        console.log("there is an error " + JSON.stringify(error));
+                    }
+                );
+                $scope.checkForUpdate = false;
+            }
+            else {
+                $scope.checkForUpdate = true;
+            }
         };
 
         /**
@@ -93,6 +106,7 @@ angular.module('jhipsterApp')
                     $scope.showModalUpdate = !$scope.showModalUpdate;
                     $scope.addReservationError = false ;
                     $scope.error = {};
+                    $scope.showModalSucess = !$scope.showModalSucess;
 
                 }, function (error) {
                     $scope.addReservationError = true;
@@ -121,9 +135,10 @@ angular.module('jhipsterApp')
         /**
          *
          */
-        $scope.toggleModalDelete = function () {
-            $scope.showModalUpdate = !$scope.showModalUpdate;
+        $scope.toggleModalDelete = function (reservationInfo) {
+            $scope.selectedReservationInfo = reservationInfo;
             $scope.showModalDelete = !$scope.showModalDelete;
+            $scope.showModalUpdate = !$scope.showModalUpdate;
         };
 
 

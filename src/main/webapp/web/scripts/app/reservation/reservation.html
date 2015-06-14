@@ -8,77 +8,79 @@
                 </div>
                 <div class="panel-body">
                     <div class="row" style="padding-left: 5%;">
-                        <form class="form-horizontal" role="form" ng-submit="add(categorieInfo)" name="catAdd">
+                        <form class="form-horizontal" role="form"  name="reservAdd">
 
                             <div class="form-group">
 
-                                <div class="col-sm-11">
+                                <div class="col-sm-11"  ng-class="{ 'has-error': reservAdd.reservRef.$invalid && checkForUpdate }">
                                     <input class="form-control"  placeholder="Reference Reservation "
-                                           ng-model="reservationInfo.reference">
+                                         name="reservRef"  ng-model="reservationInfo.reference" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
 
-                                <div class="col-sm-11">
+                                <div class="col-sm-11" ng-class="{ 'has-error': reservAdd.reservDateStart.$invalid && checkForUpdate }">
                                     <input class="form-control"  placeholder="Date start" jqdatepicker
-                                           ng-model="reservationInfo.dateStart">
+                                        name="reservDateStart"   ng-model="reservationInfo.dateStart" required>
 
                                 </div>
                             </div>
 
                             <div class="form-group">
 
-                                <div class="col-sm-11">
+                                <div class="col-sm-11"
+                                     ng-class="{ 'has-error': reservAdd.reservDateEnd.$invalid && checkForUpdate }">
                                     <input type="text" class="form-control"  placeholder="Date end "
-                                           ng-model="reservationInfo.dateEnd" jqdatepicker>
+                                       name="reservDateEnd"    ng-model="reservationInfo.dateEnd" jqdatepicker required>
                                 </div>
                             </div>
 
                             <div class="form-group">
 
-                                <div class="col-sm-11">
+                                <div class="col-sm-11" ng-class="{ 'has-error': reservAdd.reservDesription.$invalid && checkForUpdate }">
                                     <input class="form-control"  placeholder="Description"
-                                           ng-model="reservationInfo.description">
+                                          name="reservDesription" ng-model="reservationInfo.description" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
 
-                                <div class="col-sm-11">
+                                <div class="col-sm-11" >
                                     <input class="form-control"  placeholder="login" disabled ="true"
-                                           ng-model="account.login">
+                                           ng-model="account.login" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
 
-                                <div class="col-sm-11">
-                                    <select chosen  name="category" ng-model="categoryForResourceAdd"
+                                <div class="col-sm-11" ng-class="{ 'has-error': reservAdd.reservCategory.$invalid && checkForUpdate }">
+                                    <select chosen  name="reservCategory" ng-model="categoryForResourceAdd"
                                              style="display: inline-block;"
                                             data-placeholder="select category"
                                             id="categoryReservation"
                                              class="form-control"
                                             ng-options="category.reference as category.nameCategorie  for category in categories
-                                            track by category.reference">
+                                            track by category.reference" required>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="form-group">
 
-                                <div class="col-sm-11">
-                                    <select chosen  ng-model="reservationInfo.referenceResource" name="resource" placeholder="login"
+                                <div class="col-sm-11" ng-class="{ 'has-error': reservAdd.reservResource.$invalid && checkForUpdate }">
+                                    <select chosen  ng-model="reservationInfo.referenceResource" name="reservResource" placeholder="login"
                                             style="display: inline-block;"
                                             data-placeholder="select category" ,
                                             id="resourceReservation"
                                             class="form-control" ng-options="resource.reference as resource.name  for resource in resourcesByCategoryForAdd
-                                            track by resource.reference" >
+                                            track by resource.reference" required>
 
 
                                     </select>
                                 </div>
                             </div>
+
 
 
                         </form>
@@ -102,12 +104,6 @@
         </div>
     </div>
     <div class="container row col-lg-9">
-
-
-    <div class="alert alert-danger" ng-show="addReservationError" >
-        <strong>Add reservation  failed!</strong>{{error.data.errorMessage}}.
-
-    </div>
         <div class="panel panel-primary"  style="height :410px;">
 
             <div class="panel-heading">
@@ -334,23 +330,6 @@
     </modal>
 </div>
 
-<modal id="myModal" class="modal " visible="showModalDelete">
-
-    <div class="modal-header alert-info">
-        <a href="#" data-dismiss="modal" aria-hidden="true" class="close">×</a>
-        Delete
-    </div>
-
-    <div class="modal-body alert-warning">
-        <p>You are about to delete.</p>
-
-        <p>Do you want to proceed?</p>
-    </div>
-    <div class="modal-footer">
-        <a  id="btnYes" class="btn btn-danger" ng-click="delete(reservationInfo)">Yes</a>
-        <a href="#" data-dismiss="modal" aria-hidden="true" class="btn btn-success">No</a>
-    </div>
-</modal>
 
 
 </div>
@@ -381,3 +360,41 @@
     </div>
 
 </div>
+
+
+<div>
+    <modal title="Error add category " visible="showModalError">
+        <div class=" alert alert-danger">
+            <strong>Add reservation  failed!</strong>{{error.data.errorMessage}}.
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+
+    </modal>
+    <div>
+
+        <div>
+            <modal title="Success add category " visible="showModalSucess">
+                <div class=" alert alert-success">
+                    <strong>Operation reservation sucessed!</strong>.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+            </modal>
+            <div>
+
+                <div>
+                    <modal title="Confirm delete" visible="showModalDelete">
+                        <div class="modal-body alert-info">
+                            are you sure to reservation this reservation
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <a class="btn btn-danger btn-ok" ng-click="delete(reservationInfo)">Delete</a>
+                        </div>
+
+                    </modal>
+                    <div>

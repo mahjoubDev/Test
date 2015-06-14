@@ -8,39 +8,40 @@
                 </div>
                 <div class="panel-body">
                     <div class="row" style="padding-left: 5%;">
-                        <form class="form-horizontal" role="form">
+                        <form class="form-horizontal" role="form" name="resAdd">
 
                             <div class="form-group">
 
-                                <div class="col-sm-11">
+                                <div class="col-sm-11" ng-class="{ 'has-error': resAdd.resRef.$invalid && checkForUpdate }">
                                     <input class="form-control"  placeholder="Reference resource "
-                                           ng-model="resourceInfo.reference" required>
+                                          name="resRef" ng-model="resourceInfo.reference" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
 
-                                <div class="col-sm-11">
+                                <div class="col-sm-11" ng-class="{ 'has-error': resAdd.resName.$invalid && checkForUpdate }">
                                     <input class="form-control"  placeholder="Name resource"
-                                           ng-model="resourceInfo.name" required>
+                                          name="resName" ng-model="resourceInfo.name" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
 
-                                <div class="col-sm-11">
+                                <div class="col-sm-11" ng-class="{ 'has-error': resAdd.resDescription.$invalid && checkForUpdate }">
                                     <input class="form-control"  placeholder="Description resource "
-                                           ng-model="resourceInfo.description" required>
+                                           name="resDescription" ng-model="resourceInfo.description" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
 
-                                <div class="col-sm-11">
+                                <div class="col-sm-11" ng-class="{ 'has-error': resAdd.resCategory.$invalid && checkForUpdate }">
                                     <select chosen id="categoryAdd" ng-model="resourceInfo.referenceCategory"
-                                            name="category" style="display: inline-block;"
+                                             style="display: inline-block;"
                                             data-placeholder="Select category"
                                             no-results-text="'pas de resultat '"
+                                            name="resCategory"
                                             class="form-control"  required
                                             ng-options="category.reference as category.nameCategorie  for category in categories
                                             track by category.reference"
@@ -51,22 +52,24 @@
 
                             <div class="form-group">
 
-                                <div class="col-sm-11">
+                                <div class="col-sm-11" ng-class="{ 'has-error': resAdd.resTypeDate.$invalid && checkForUpdate }">
                                     <select chosen id="typeDateAdd" ng-model="resourceInfo.typeDate"
                                             no-results-text="'pas de resultat '"
                                             data-placeholder="Choisir le type date" class="form-control" required
+                                            name="resTypeDate"
                                             ng-options="typeDate as typeDate  for typeDate in typeDates
                                             track by typeDate"
                                             >
+
                                     </select>
                                 </div>
                             </div>
 
                             <div class="form-group">
 
-                                <div class="col-sm-11">
-                                    <input class="form-control"  placeholder="Duree Max"
-                                           ng-model="resourceInfo.dureeMax">
+                                <div class="col-sm-11" ng-class="{ 'has-error': resAdd.resMaxDuree.$invalid && checkForUpdate }">
+                                    <input class="form-control"  placeholder="Duree Max" name="resMaxDuree"
+                                           ng-model="resourceInfo.dureeMax" required>
                                 </div>
                             </div>
 
@@ -92,10 +95,6 @@
         </div>
     </div>
     <div class="container row col-lg-9">
-
-        <div class="alert alert-danger" ng-show="addResourceError" >
-            <strong>Add resource  failed!</strong>The reference {{resourceInfo.reference}} exists always.
-        </div>
 
         <div class="panel panel-primary ">
 
@@ -135,7 +134,7 @@
             <td>
                 <p data-placement="top" data-toggle="tooltip" title="Delete">
                     <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"
-                            ng-click="delete(row)">
+                            ng-click="toggleModalDelete(row)">
                         <span class="glyphicon glyphicon-trash"></span></button>
                 </p>
             </td>
@@ -152,81 +151,6 @@
     </table>
 
 
-    <div>
-        <modal title="Add Resource " visible="showModalAdd">
-            <form class="form-horizontal" role="form" name="resAdd" ng-submit="add(resourceInfo)">
-
-                <div class="form-group">
-                    <label for="refrenceResource" class="col-sm-4 control-label pull-left">Reference resource </label>
-
-                    <div class="col-sm-6">
-                        <input class="form-control" id="refrenceResourceAdd" placeholder="Reference resource "
-                               ng-model="resourceInfo.reference" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="nameResource" class="col-sm-4 control-label pull-left">name resource</label>
-
-                    <div class="col-sm-6">
-                        <input class="form-control" id="nameResourceAdd" placeholder="Name resource"
-                               ng-model="resourceInfo.name" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="descriptionCategory" class="col-sm-4 control-label">Description Category </label>
-
-                    <div class="col-sm-6">
-                        <input class="form-control" id="descriptionResource" placeholder="Description resource "
-                               ng-model="resourceInfo.description" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="referenceCategory" class="col-sm-4 control-label"> category</label>
-
-                    <div class="col-sm-6">
-                        <select ng-model="resourceInfo.referenceCategory" name="category" style="display: inline-block;"
-                                class="form-control" id="Category" required>
-                            <option ng-repeat="category in categories" value="{{category.reference}}">
-                                {{category.nameCategorie}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="typeDate" class="col-sm-4 control-label">Type date </label>
-
-                    <div class="col-sm-6">
-                        <select ng-model="resourceInfo.typeDate" id="typeDate" class="form-control" required>
-                            <option value="HOUR" selected="selected">HOUR</option>
-                            <option value="DAY">DAY</option>
-                            <option value="WEEK">WEEK</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="dureeMax" class="col-sm-4 control-label">Duree max</label>
-
-                    <div class="col-sm-6">
-                        <input class="form-control" id="dureeMax" placeholder="Duree Max"
-                               ng-model="resourceInfo.dureeMax">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success" >Add</button>
-                    </div>
-                </div>
-
-
-            </form>
-        </modal>
-        <div>
 
             <div>
                 <modal title="Update Resource" visible="showModalUpdate">
@@ -298,7 +222,7 @@
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-success" ng-click="update()">Add</button>
+                                <button type="submit" class="btn btn-success" ng-click="update()">update</button>
                             </div>
                         </div>
 
@@ -311,3 +235,40 @@
             </div>
         </div>
     </div>
+
+        <div>
+            <modal title="Error add Resource  " visible="showModalError">
+                <div class=" alert alert-danger">
+                    <strong>Add Resource failed!</strong>{{error.data.errorMessage}}.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+            </modal>
+            <div>
+
+                <div>
+                    <modal title="Success add resource " visible="showModalSucess">
+                        <div class=" alert alert-success">
+                            <strong>Operation resource sucessed!</strong>.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </modal>
+                    <div>
+
+                        <div>
+                            <modal title="Confirm delete" visible="showModalDelete">
+                                <div class="modal-body alert-info">
+                                    are you sure to delete this resource
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <a class="btn btn-danger btn-ok" ng-click="delete()">Delete</a>
+                                </div>
+
+                            </modal>
+                            <div>

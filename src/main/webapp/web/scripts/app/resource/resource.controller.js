@@ -12,6 +12,8 @@ angular.module('jhipsterApp')
         $scope.typeDates = ['HOUR','DAY','WEEK'] ;
         $("#typeDateAdd").chosen() ;
         $("#categoryAdd").chosen() ;
+        $scope.checkForUpdate = false ;
+        $scope.showModalDelete = false;
 
         /**
          *
@@ -50,18 +52,27 @@ angular.module('jhipsterApp')
          */
         $scope.add = function (resourceInfo) {
             console.log('call method add resource');
+            if (angular.isDefined(resourceInfo.reference) && angular.isDefined(resourceInfo.name)
+            && angular.isDefined(resourceInfo.description) && angular.isDefined(resourceInfo.referenceCategory)
+            && angular.isDefined(resourceInfo.typeDate) && angular.isDefined(resourceInfo.dureeMax)) {
+                var promise = Resource.add({}, resourceInfo).$promise;
+                promise.then(function (data) {
+                        console.log('resource has been added successfully')
+                        $scope.resources = Resource.findAll();                    // $route.reload();
+                        $scope.resourceInfo = {};
+                        $scope.showModalSucess = !$scope.showModalSucess;
 
-            var promise = Resource.add({},resourceInfo).$promise;
-            promise.then(function (data) {
-                    console.log('resource has been added successfully')
-                    $scope.resources = Resource.findAll();                    // $route.reload();
-                    $scope.resourceInfo = {};
-
-                }, function (error) {
-                    $scope.addResourceError = true ;
-                    console.log("there is an error " + error);
-                }
-            );
+                    }, function (error) {
+                        $scope.addResourceError = true;
+                        $scope.error = error;
+                        $scope.showModalError = !$scope.showModalError;
+                        console.log("there is an error " + error);
+                    }
+                );
+                $scope.checkForUpdate = false;
+            }else {
+                $scope.checkForUpdate = true;
+            }
         };
 
         /**
@@ -69,9 +80,10 @@ angular.module('jhipsterApp')
          *
          * @param category  categgory object selected by the user.
          */
-        $scope.delete = function (resource) {
+        $scope.delete = function () {
             console.log('call method delete catgory');
-            Resource.delete({reference: resource.reference});
+            Resource.delete({reference: $scope.selectedResource.reference});
+            $scope.showModalDelete = !$scope.showModalDelete;
             $scope.resources = Resource.findAll () ;
             console.log("resource deleted successfully") ;
 
@@ -97,6 +109,7 @@ angular.module('jhipsterApp')
                 });
 
                 $scope.showModalUpdate = !$scope.showModalUpdate;
+                $scope.showModalSucess = !$scope.showModalSucess;
             }
             else {
                 console.log('the resource  is not selected there is an erro e cannot update !!!')
@@ -121,6 +134,15 @@ angular.module('jhipsterApp')
             $scope.showModalUpdate = !$scope.showModalUpdate;
         };
 
+        /**
+         *
+         * @param category
+         */
+        $scope.toggleModalDelete = function (resource) {
+            $scope.selectedResource = resource;
+            $scope.showModalDelete = !$scope.showModalDelete;
+        };
+
         $scope.cancel = function () {
             $scope.showModalUpdate = false;
         };
@@ -135,6 +157,7 @@ angular.module('jhipsterApp')
          */
         $scope.initialize = function () {
             $scope.resourceInfo = {};
+            $scope.checkForUpdate = false;
         };
 
     });
