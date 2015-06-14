@@ -40,6 +40,7 @@
                                     <select chosen id="categoryAdd" ng-model="resourceInfo.referenceCategory"
                                             name="category" style="display: inline-block;"
                                             data-placeholder="Select category"
+                                            no-results-text="'pas de resultat '"
                                             class="form-control"  required
                                             ng-options="category.reference as category.nameCategorie  for category in categories
                                             track by category.reference"
@@ -52,6 +53,7 @@
 
                                 <div class="col-sm-11">
                                     <select chosen id="typeDateAdd" ng-model="resourceInfo.typeDate"
+                                            no-results-text="'pas de resultat '"
                                             data-placeholder="Choisir le type date" class="form-control" required
                                             ng-options="typeDate as typeDate  for typeDate in typeDates
                                             track by typeDate"
@@ -76,7 +78,7 @@
             <div style="margin-left: 10px;">
 
                 <button class="btn btn-large btn-success">
-                    <span class="glyphicon glyphicon-search"></span> <span
+                    <span class="glyphicon glyphicon-plus"></span> <span
                         ng-click="add(resourceInfo)">Ajouter</span>
                 </button>
 

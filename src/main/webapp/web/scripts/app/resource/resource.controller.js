@@ -130,6 +130,13 @@ angular.module('jhipsterApp')
             $scope.reservationInfo = {};
         };
 
+        /**
+         *
+         */
+        $scope.initialize = function () {
+            $scope.resourceInfo = {};
+        };
+
     });
 
 

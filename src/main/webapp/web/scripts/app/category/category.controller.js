@@ -1,13 +1,15 @@
 'use strict';
 
 angular.module('jhipsterApp')
-    .controller('CategoryController', function ($scope, $http, Category) {
+    .controller('CategoryController', function ($scope, $http, Category,$window) {
         $scope.showModalUpdate = false;
         $scope.showModalAdd = false;
         $scope.categorieInfo = {};
         $scope.itemsByPage = 5;
         $scope.toggle = '!toggle';
-        $scope.addCategoryError = false ;
+        $scope.addCategoryError = false;
+        $scope.showModalDelete = false;
+        $scope.checkForUpdate = false ;
         /**
          *
          */
@@ -16,10 +18,13 @@ angular.module('jhipsterApp')
             $scope.categories = response;
         });
 
-        $scope.deleteItem = function(item){
-            var msgbox = $dialog.messageBox('Delete Item', 'Are you sure?', [{label:'Yes, I\'m sure', result: 'yes'},{label:'Nope', result: 'no'}]);
-            msgbox.open().then(function(result){
-                if(result === 'yes') {
+        $scope.deleteItem = function (item) {
+            var msgbox = $dialog.messageBox('Delete Item', 'Are you sure?', [{
+                label: 'Yes, I\'m sure',
+                result: 'yes'
+            }, {label: 'Nope', result: 'no'}]);
+            msgbox.open().then(function (result) {
+                if (result === 'yes') {
                     //code to delete here
                     console.log("deleting item " + item.name);
                 }
@@ -30,22 +35,28 @@ angular.module('jhipsterApp')
          *
          */
         $scope.add = function (categorieInfo) {
-            console.log('call method add category   '+JSON.stringify(categorieInfo));
-                var promise = Category.add({}, categorieInfo).$promise;
-                promise.then(function (data) {
-                        console.log('category has been added successfully')
-                        $scope.categories = Category.findAll();
-                        $scope.categorieInfo = {};
-                        $scope.addCategoryError = false;
+            console.log('call method add category   ' + JSON.stringify(categorieInfo));
 
-                    }, function (error) {
-                        $scope.addCategoryError = true;
-                        alert( "<div class='alert alert-danger'>"+
-                            "<strong>Add category failed!</strong>The reference {{categorieInfo.reference}} exists always."+
-                       " </div>") ;
-                        console.log("there is an error " + error);
-                    }
-                );
+            if (angular.isDefined(categorieInfo.nameCategorie) &&angular.isDefined(categorieInfo.reference)) {
+            var promise = Category.add({}, categorieInfo).$promise;
+            promise.then(function (data) {
+                    console.log('category has been added successfully')
+                    $scope.categories = Category.findAll();
+                    $scope.categorieInfo = {};
+                    $scope.showModalSucess = !$scope.showModalSucess;
+
+                }, function (error) {
+                    $scope.addCategoryError = true;
+                    $scope.error = error;
+                    $scope.showModalError = !$scope.showModalError;
+                    console.log("there is an error " + error);
+                }
+            );
+                $scope.checkForUpdate = false;
+        }
+            else {
+                $scope.checkForUpdate = true;
+            }
         };
 
         /**
@@ -53,10 +64,13 @@ angular.module('jhipsterApp')
          *
          * @param category  categgory object selected by the user.
          */
-        $scope.delete = function (category) {
+        $scope.delete = function () {
             console.log('call method delete catgory');
-            Category.delete({referenceCategory: category.reference});
+            var promise= Category.delete({referenceCategory: $scope.selectedCategory.reference});
+            $scope.showModalDelete = !$scope.showModalDelete;
             $scope.categories = Category.findAll();
+            $window.location.reload();
+
 
         };
 
@@ -83,6 +97,7 @@ angular.module('jhipsterApp')
                 });
 
                 $scope.showModalUpdate = !$scope.showModalUpdate;
+                $scope.showModalSucess = !$scope.showModalSucess;
             }
             else {
                 console.log('the category is not selected there is an erro e cannot update !!!')
@@ -107,12 +122,25 @@ angular.module('jhipsterApp')
             $scope.showModalUpdate = !$scope.showModalUpdate;
         };
 
+        /**
+         *
+         * @param category
+         */
+        $scope.toggleModalDelete = function (category) {
+            $scope.selectedCategory = category;
+            $scope.showModalDelete = !$scope.showModalDelete;
+        };
+
         $scope.cancel = function () {
             $scope.showModalUpdate = false;
         };
 
+        /**
+         *
+         */
         $scope.initialize = function () {
             $scope.categorieInfo = {};
+            $scope.checkForUpdate = false;
         };
 
 
