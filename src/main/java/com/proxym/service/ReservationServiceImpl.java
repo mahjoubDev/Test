@@ -66,12 +66,12 @@ public class ReservationServiceImpl implements ReservationService {
 		ResourceValidator.checkResourceExist(
 				reservationInfo.getReferenceResource(), resource);
 
-		Reservation reservationExist = reservationRepository
-				.findByReference(reservationInfo.getReference());
-		ResourceValidator.checkReservationExistAlready(
-				reservationInfo.getReference(), reservationExist);
+//		Reservation reservationExist = reservationRepository
+//				.findOne(reservationInfo.getId());
+//		ResourceValidator.checkReservationExistAlready(
+//				reservationInfo.getId(), reservationExist);
 
-		
+		ResourceValidator.checkReservationDates(reservationInfo) ;		
 
 		// verify the possibility of the reservation.
 		ResourceValidator.checkReservationPossible(resource, reservationInfo);
@@ -89,6 +89,7 @@ public class ReservationServiceImpl implements ReservationService {
 		Reservation reservation = reservationInfo.toDomain();
 		reservation.setLoginUser(reservationInfo.getLoginUser());
 		reservation.setResource(resource);
+		reservation.setId(0l);
 		reservationRepository.save(reservation);
 
 	}
@@ -101,14 +102,14 @@ public class ReservationServiceImpl implements ReservationService {
 	 * com.proxym.business.ReservationInfo)
 	 */
 	@Transactional
-	public void updateReservation(String referenceReservation, ReservationInfo reservationInfo)
+	public void updateReservation(Long id, ReservationInfo reservationInfo)
 			throws GestionResourceException, ParseException {
 
 		LOGGER.debug("upadte existing reservation to data base ", reservationInfo);
 
 		// check if the reservation with the target refernece exists in th data base
-		Reservation existingReservation = reservationRepository.findByreference(referenceReservation);
-		ResourceValidator.checkReservationExist(referenceReservation, existingReservation);
+		Reservation existingReservation = reservationRepository.findOne(id) ;
+		ResourceValidator.checkReservationExist(id, existingReservation);
 
 
 		// check if the coming resource exists in the system otherwise throw exception
@@ -120,7 +121,7 @@ public class ReservationServiceImpl implements ReservationService {
 		
 		//check reservation dates
 		List<Reservation> reservations =reservationRepository.getReservationForResourceInUpdate(reservationInfo.getDateStart(), 
-				reservationInfo.getDateEnd(),resource.getId(),reservationInfo.getReference());
+				reservationInfo.getDateEnd(),resource.getId(),reservationInfo.getId());
 		ResourceValidator.checkReservationForResource(reservations, reservationInfo.getReferenceResource());
 
 		
@@ -138,16 +139,16 @@ public class ReservationServiceImpl implements ReservationService {
 	 * @see
 	 * com.proxym.service.ReservationService#deleteReservation(java.lang.String)
 	 */
-	public void deleteReservation(String referenceReservation)
+	public void deleteReservation(Long id)
 			throws GestionResourceException {
 
-		LOGGER.debug("delete reservation fom  data base ", referenceReservation);
+		LOGGER.debug("delete reservation fom  data base ", id);
 
 		// check if the reservation with the target refernece exists in th data
 		// base
 		Reservation existingReservation = reservationRepository
-				.findByreference(referenceReservation);
-		ResourceValidator.checkReservationExist(referenceReservation,
+				.findOne(id) ;
+		ResourceValidator.checkReservationExist(id,
 				existingReservation);
 
 		// delete the reservation.

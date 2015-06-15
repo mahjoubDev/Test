@@ -35,10 +35,6 @@ public class Reservation implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	/**
-	 * reference of the resource.
-	 */
-	private String reference ;
 	
 	/**
 	 * Date when the reservation starts.
@@ -100,25 +96,6 @@ public class Reservation implements Serializable {
 		this.id = idReservation;
 	}
 
-	/**
-	 * Returns the reservation's reference.
-	 * 
-	 * @return A <code>String</code> containing the refrence
-	 * of the current reservation.
-	 */
-	public String getReference() {
-		return reference;
-	}
-
-	/**
-	 * Sets the reservation's reference.
-	 * 
-	 * @param reference A <code>String</code> containing the refrence
-	 * of the current reservation.
-	 */
-	public void setReference(String reference) {
-		this.reference = reference;
-	}
 
 	/**
 	 * Returns the date of starting reservation.
@@ -230,7 +207,6 @@ public class Reservation implements Serializable {
 		ReservationInfo resourceInfo =new ReservationInfo	();
 		resourceInfo.setDateEnd(dateEnd);
 		resourceInfo.setDateStart(dateStart);
-		resourceInfo.setReference(reference);
 		resourceInfo.setDescription(description);
 		resourceInfo.setReferenceResource(this.resource!=null ?this.resource.getReference():null);
 		resourceInfo.setLoginUser(loginUser);
@@ -247,7 +223,6 @@ public class Reservation implements Serializable {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((loginUser == null) ? 0 : loginUser.hashCode());
-		result = prime * result + ((reference == null) ? 0 : reference.hashCode());
 		result = prime * result + ((resource == null) ? 0 : resource.hashCode());
 		return result;
 	}
@@ -285,11 +260,6 @@ public class Reservation implements Serializable {
 			if (other.loginUser != null)
 				return false;
 		} else if (!loginUser.equals(other.loginUser))
-			return false;
-		if (reference == null) {
-			if (other.reference != null)
-				return false;
-		} else if (!reference.equals(other.reference))
 			return false;
 		if (resource == null) {
 			if (other.resource != null)

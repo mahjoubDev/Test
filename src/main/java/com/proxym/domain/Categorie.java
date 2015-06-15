@@ -49,7 +49,7 @@ public class Categorie implements Serializable {
 	/**
 	 * List of resources related to this category.
 	 */
-	@OneToMany(mappedBy = "category",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "category",fetch=FetchType.EAGER)
 	private Set<Resource> resources = new HashSet<Resource>(0);
 
 	/**

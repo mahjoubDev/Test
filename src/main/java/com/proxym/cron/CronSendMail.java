@@ -67,10 +67,10 @@ public class CronSendMail {
 
 		for (Reservation reservation : reservations) {
 			
-			LOGGER.debug("processing reservation "+reservation.getReference());
+			LOGGER.debug("processing reservation "+reservation.getId());
 			
 			String mailUser = reservation.getLoginUser() + Constants.POST_FIX_MAIL;
-			SendMail(mailUser, "notification pour la reservation " + reservation.getReference(),
+			SendMail(mailUser, "notification pour la reservation ",
 					"Votre reservation pour la " + reservation.getResource().getName() + " bébutera aprés 15 minute ");
 
 		}

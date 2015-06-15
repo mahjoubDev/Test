@@ -36,7 +36,7 @@ public interface ReservationService {
 	 * @throws GestionResourceException indicates there is a problem.
 	 * @throws ParseException 
 	 */
-	public void updateReservation (String referenceReservation,ReservationInfo reservationInfo) throws GestionResourceException, ParseException;
+	public void updateReservation (Long id,ReservationInfo reservationInfo) throws GestionResourceException, ParseException;
 	
 	/**
 	 * delete existing reservation.
@@ -45,7 +45,7 @@ public interface ReservationService {
 	 * 
 	 * @throws GestionResourceException indicates there is a problem.
 	 */
-	public void deleteReservation (String referenceReservation) throws GestionResourceException;
+	public void deleteReservation (Long id) throws GestionResourceException;
 	
 	/**
 	 * Gets all the reservations existing in the system.

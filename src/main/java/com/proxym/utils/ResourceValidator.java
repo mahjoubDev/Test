@@ -60,9 +60,9 @@ public class ResourceValidator {
 	 * @param reservation reservation that matches the reference.
 	 * @throws GestionResourceException indicates there is a problem.
 	 */
-	public static  void checkReservationExist(String reference,Reservation reservation) throws GestionResourceException{
+	public static  void checkReservationExist(Long id,Reservation reservation) throws GestionResourceException{
 		if(reservation==null){
-			throw new GestionResourceException("La reservation  de reference "+reference+"  n'existe pas","0.2.3" );
+			throw new GestionResourceException("La reservation  de reference "+id+"  n'existe pas","0.2.3" );
 		}
 	}
 	
@@ -80,16 +80,12 @@ public class ResourceValidator {
 	}
 
 	/**
-	 * Check if the duration of reservation is not greater
-	 * than the one allowed by the resource.
 	 * 
-	 * @param resource
 	 * @param reservationInfo
-	 * @return
 	 * @throws GestionResourceException
-	 * @throws ParseException 
+	 * @throws ParseException
 	 */
-	public static void checkReservationPossible(Resource resource, ReservationInfo reservationInfo) throws GestionResourceException, ParseException{
+	public static void  checkReservationDates (ReservationInfo reservationInfo) throws GestionResourceException, ParseException {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String TodayString = simpleDateFormat.format(new Date());
 		Date today = simpleDateFormat.parse(TodayString) ;
@@ -105,7 +101,18 @@ public class ResourceValidator {
 		else if(!(reservationInfo.getDateEnd().compareTo(reservationInfo.getDateStart()) > 0)){
 			throw new GestionResourceException("la date de fin ne dois pas inférieur a la date du debut ", "1.1.2");
 		}
-		else {
+	}
+	/**
+	 * Check if the duration of reservation is not greater
+	 * than the one allowed by the resource.
+	 * 
+	 * @param resource
+	 * @param reservationInfo
+	 * @return
+	 * @throws GestionResourceException
+	 * @throws ParseException 
+	 */
+	public static void checkReservationPossible(Resource resource, ReservationInfo reservationInfo) throws GestionResourceException, ParseException{
 
 			Date dateStart=reservationInfo.getDateStart();
 			Date dateEnd=reservationInfo.getDateEnd();
@@ -141,7 +148,6 @@ public class ResourceValidator {
 
 				break;
 			}
-		}
 
 	}
 
@@ -213,9 +219,9 @@ public class ResourceValidator {
 	 * @param reservation
 	 * @throws GestionResourceException
 	 */
-	public static void checkReservationExistAlready (String reference, Reservation reservation) throws GestionResourceException {
+	public static void checkReservationExistAlready (Long id, Reservation reservation) throws GestionResourceException {
 		if( reservation !=null ) {
-			throw new GestionResourceException("la reservation  de reference "+reference+" existe deja", "0.1.2") ;
+			throw new GestionResourceException("la reservation  de reference "+id+" existe deja", "0.1.2") ;
 		}
 	}
 	

@@ -2,7 +2,7 @@
 
 angular.module('jhipsterApp')
     .factory('Reservation', function ($resource) {
-        return $resource('http://localhost:8080/proxym/reservation/:referenceReservation/:referenceResource/:action',
+        return $resource('http://localhost:8080/proxym/reservation/:id/:referenceResource/:action',
             {}, {
                 'findAll': {
                     method: 'GET',
@@ -34,7 +34,7 @@ angular.module('jhipsterApp')
                     method: 'POST',
                     isArray: true,
                     params: {
-                        referenceReservation: '@referenceReservation',
+                        id: '@id',
                         action: 'update'
                     },
                     headers: {
@@ -46,7 +46,7 @@ angular.module('jhipsterApp')
                     method: 'POST',
                     isArray: true,
                     params: {
-                        referenceReservation: '@referenceReservation',
+                        id: '@id',
                         action: 'delete'
                     }
                 },

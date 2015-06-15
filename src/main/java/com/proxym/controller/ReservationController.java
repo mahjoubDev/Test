@@ -65,12 +65,12 @@ public class ReservationController extends AbstractRestHandler {
 	 * @throws GestionResourceException
 	 * @throws ParseException 
 	 */
-	@RequestMapping(value="/{referenceReservation:.+}/update",method=RequestMethod.POST,produces = "application/json")
+	@RequestMapping(value="/{id:.+}/update",method=RequestMethod.POST,produces = "application/json")
 	@ApiOperation(value = "Update existing booking", notes = "Update existing booking")
-	public void updateReservation (@PathVariable String referenceReservation, @RequestBody ReservationInfo reservationInfo) throws GestionResourceException, ParseException{
+	public void updateReservation (@PathVariable Long id, @RequestBody ReservationInfo reservationInfo) throws GestionResourceException, ParseException{
 		
-		LOGGER.debug("updating  existing  reservation from controller ", referenceReservation,reservationInfo);
-		reservationService.updateReservation(referenceReservation,reservationInfo);
+		LOGGER.debug("updating  existing  reservation from controller ", id,reservationInfo);
+		reservationService.updateReservation(id,reservationInfo);
 		
 	}
 	
@@ -114,12 +114,12 @@ public class ReservationController extends AbstractRestHandler {
 	 * @param reservationInfo
 	 * @throws GestionResourceException
 	 */
-	@RequestMapping(value="/{referenceReservation:.+}/delete",method=RequestMethod.POST,produces = "application/json")
+	@RequestMapping(value="/{id:.+}/delete",method=RequestMethod.POST,produces = "application/json")
 	@ApiOperation(value = "Delete existing booking", notes = "Delete existing booking")
-	public void deleteReservation (@PathVariable String referenceReservation) throws GestionResourceException{
+	public void deleteReservation (@PathVariable Long id) throws GestionResourceException{
 		
-		LOGGER.debug("deleting existing reservation from controller ", referenceReservation);
-		reservationService.deleteReservation(referenceReservation);
+		LOGGER.debug("deleting existing reservation from controller ", id);
+		reservationService.deleteReservation(id);
 		
 	}
 	

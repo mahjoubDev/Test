@@ -73,7 +73,7 @@ angular.module('jhipsterApp')
         $scope.delete = function (reservationInfo) {
 
             console.log("call delete rservation web services");
-            var promise = Reservation.delete({referenceReservation: reservationInfo.reference}).$promise;
+            var promise = Reservation.delete({id: reservationInfo.id}).$promise;
             promise.then(function (data) {
                 console.log("the reservation has been deleted succesfully");
                 $scope.getReservationsByReferenceResources(reservationInfo.referenceResource);
@@ -97,7 +97,7 @@ angular.module('jhipsterApp')
         $scope.update = function (reservationInfo) {
             console.log(JSON.stringify(reservationInfo)) ;
             if (angular.isDefined(reservationInfo)) {
-                var promise = Reservation.update({referenceReservation: reservationInfo.reference}, reservationInfo).$promise;
+                var promise = Reservation.update({id: reservationInfo.id}, reservationInfo).$promise;
                 promise.then(function (data) {
                     console.log("the reservation has been updatedd succesfully");
                     $scope.reservations = Reservation.findAll();

@@ -10,11 +10,6 @@ import com.proxym.serialiser.DateSerializer;
 public class ReservationInfo {
 
 	/**
-	 * reference of the resource.
-	 */
-	private String reference ;
-
-	/**
 	 * Date when the reservation starts.
 	 */
 	//@JsonSerialize(using=DateSerializer.class)
@@ -67,10 +62,9 @@ public class ReservationInfo {
 	 * @param loginUser
 	 * @param referenceResource
 	 */
-	public ReservationInfo(String reference, Date dateStart, Date dateEnd,
+	public ReservationInfo( Date dateStart, Date dateEnd,
 			String description, String loginUser, String referenceResource) {
 		super();
-		this.reference = reference;
 		this.dateStart = dateStart;
 		this.dateEnd = dateEnd;
 		this.description = description;
@@ -83,26 +77,6 @@ public class ReservationInfo {
 	/*
 	 * Getters and Setters.
 	 */
-
-	/**
-	 * Returns the reservation's reference.
-	 * 
-	 * @return A <code>String</code> containing the refrence
-	 * of the current reservation.
-	 */
-	public String getReference() {
-		return reference;
-	}
-
-	/**
-	 * Sets the reservation's reference.
-	 * 
-	 * @param reference A <code>String</code> containing the refrence
-	 * of the current reservation.
-	 */
-	public void setReference(String reference) {
-		this.reference = reference;
-	}
 
 	/**
 	 * Returns the date of starting reservation.
@@ -230,7 +204,6 @@ public class ReservationInfo {
 		reservation.setDateEnd(dateEnd);
 		reservation.setDateStart(dateStart);
 		reservation.setDescription(description);
-		reservation.setReference(reference);
 		reservation.setId(id);
 		return reservation;
 	}

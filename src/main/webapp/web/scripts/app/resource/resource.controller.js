@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jhipsterApp')
-    .controller('ResourceController', function ($scope, $http, Category, Resource) {
+    .controller('ResourceController', function ($scope, $http, Category, Resource,  $window) {
         $scope.showModalUpdate = false;
         $scope.showModalAdd = false;
         $scope.resourceInfo = {};
@@ -85,6 +85,7 @@ angular.module('jhipsterApp')
             Resource.delete({reference: $scope.selectedResource.reference});
             $scope.showModalDelete = !$scope.showModalDelete;
             $scope.resources = Resource.findAll () ;
+            $window.location.reload();
             console.log("resource deleted successfully") ;
 
         };

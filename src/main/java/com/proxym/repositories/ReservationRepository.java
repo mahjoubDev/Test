@@ -37,24 +37,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 	 * native query for getting the reservations before 15 minute of it's starting date.
 	 */
 	public static final String GET_RESERVATION_FOR_TARGET_RESOURCE_In_UPDATE = "select * from reservation r where r.resource =:resource AND "
-			+ " r.reference <> :reference AND"
+			+ " r.id <> :id AND"
 			+ "( (r.date_start >= :dateStart AND r.date_start <= :dateEnd ) OR "
 			+ "(r.date_end >= :dateStart  AND r.date_end <= :dateEnd) OR"
 			+ "(r.date_start <= :dateStart AND r.date_end >= :dateEnd) )" ;
-
-	/**
-	 * gets the reservation that matches the given reference.
-	 * 
-	 * @param reference
-	 *            reference of the reservation.
-	 * 
-	 * @return An object reservation that matches the reservation otherwise returns a null object if there is not any
-	 *         object with the reference.
-	 * 
-	 * @throws GestionResourceException
-	 *             indicates there is a problem.
-	 */
-	public Reservation findByreference(String reference) throws GestionResourceException;
 
 	/**
 	 * get the reservation associated to the target resource and the dateEnd doesn't finish yet.
@@ -87,14 +73,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 	@Query(name="findByReferneceResource",value="SELECT r from Reservation r where r.resource.reference LIKE :reference")
 	public  List<Reservation> findByResource(@Param("reference") String reference) throws GestionResourceException ;
 
-	/**
-	 * gets the reservation using it's reservation.
-	 * 
-	 * @param reference reservation's refrence.
-	 * 
-	 * @return
-	 */
-	public Reservation findByReference(String reference);
 	
 	/**
 	 * get the list of reservation for resource .
@@ -116,6 +94,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 	 * @throws GestionResourceException
 	 */
 	@Query(name="getReservationForResource" ,nativeQuery=true ,value = GET_RESERVATION_FOR_TARGET_RESOURCE_In_UPDATE)
-	public List<Reservation> getReservationForResourceInUpdate (@Param("dateStart") Date dateStart, @Param("dateEnd") Date dateEnd , @Param("resource") long resource, @Param("reference") String reference) throws GestionResourceException  ;
+	public List<Reservation> getReservationForResourceInUpdate (@Param("dateStart") Date dateStart, @Param("dateEnd") Date dateEnd , @Param("resource") long resource, @Param("id") Long id) throws GestionResourceException  ;
 
 }
