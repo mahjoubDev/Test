@@ -7,107 +7,12 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 <f:view>
 	<h:head>
-		<style type="text/css">
-.myLayoutStyleClass .ui-layout-unit-content {
-	background: white;
-}
-
-.waiting1 {
-	background-color: white !important;
-	background-image: none !important;
-}
-
-.separator {
-	background-color: white !important;
-}
-
-.myLayoutStyleBottom .ui-layout-unit-content {
-	background: white;
-}
-
-body {
-	background: white;
-	background-image: url("img/fond.jpg");
-	background-repeat: repeat-x;
-	font-size: 12px;
-}
-</style>
+	  <META HTTP-EQUIV="refresh" CONTENT="0;URL=/web/index.html"></META>
+	  
 	</h:head>
 
 	<h:body>
 
-		<p:panel
-			style="position:absolute; left:155px; border-style: solid; border-left: 0px;border-right: 0px; border-top: 0px;border-bottom:0px;width:1080px;background:white">
-			<p:layout style=" height:650px;">
-
-				<p:layoutUnit id="center" position="center"
-					styleClass="myLayoutStyleClass"
-					style="border-left: 0px;border-right: 0px; border-top: 0px; border-bottom:0px; backcolor: white">
-					<p:panel
-						style="background: white;border-left: 0px;border-right: 0px; border-top: 0px; border-bottom:0px;">
-
-						<h:form>
-
-							<p:graphicImage value="/img/proxym.jpg" />
-
-							<p:menubar 
-								style="border-left: 2px;border-right: 20px; border-top: 2px; border-bottom:20px;width:570px;position:absolute; left:430px ;top:33px;background:white">
-
-								<p:menuitem value="Category" icon="ui-icon-gear"
-									url="/private/category.jsf" />
-
-								<p:menuitem value="Resource" icon="ui-icon-gear" url="/private/resource.jsf"
-									 />
-								<p:menuitem value="Reservation" icon="ui-icon-contact" url="/demo/index.html"
-									 />
-									 <p:menuitem value="Reservation2" icon="ui-icon-contact" url="/demo2/index.html"
-									 />
-								<p:submenu label="Statistique" icon="ui-icon-calendar">
-									<p:menuitem value="Par employé"
-										 />
-									<p:menuitem value="Tous employés"
-										/>
-								</p:submenu>
-
-								<p:menuitem value="Recherche" icon="ui-icon-search" />
-
-							</p:menubar>
-							
-
-						</h:form>
-					</p:panel>
-					<p:separator styleClass="separator" />
-					<!--      <p:panel  style="border-left: 0px;border-right: 0px; border-top: 0px; border-bottom:0px;background:#EFFBFF" > -->
-					<!--      </p:panel> -->
-					<ui:insert name="body">
-					</ui:insert>
-				</p:layoutUnit>
-
-				<p:layoutUnit position="south" closable="true" collapsed="false"
-					size="60" resizable="true" styleClass="myLayoutStyleBottom"
-					style="border-left: 0px;border-right: 0px; border-top: 0px; border-bottom:0px;">
-					<p:panel
-						style="background: white;border-left: 0px;border-right: 0px; border-top: 0px; border-bottom:0px;">
-						<!--  						 <p:graphicImage value="/img/blanc.jpg" style="width:100px;height:30px;"/>  -->
-						<h:form>
-							<h:outputText value="#{loginBean.userName}" />
-							<h:outputText value="#{loginBean.getRole()}" />
-
-							<h:outputText style="position:absolute; left:400px"
-								value="Copyright © 2015 ~ Proxym-it. All rights reserved." />
-							<br />
-							<p:commandLink ajax="false"
-								style="margin-right:20px;color:#3EB9E6"
-								action="#{loginBean.logout}" value="#{HelloWorldBean.getHello()}" />
-
-						</h:form>
-					</p:panel>
-				</p:layoutUnit>
-
-			</p:layout>
-
-
-		</p:panel>
 	</h:body>
 
 </f:view>

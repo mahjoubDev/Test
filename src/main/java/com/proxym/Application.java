@@ -57,39 +57,17 @@ public class Application  extends SpringBootServletInitializer{
 		return servletRegistrationBean;
 	}  
     
-//    /**
-//     * create a JSF listener.
-//     * 
-//     * @return {@link ServletListenerRegistrationBean}
-//     */
-//    @Bean
-//	public ServletListenerRegistrationBean<ConfigureListener> jsfConfigureListener() {
-//		return new ServletListenerRegistrationBean<ConfigureListener>(
-//				new ConfigureListener());
-//	}
-//	
-//    /**
-//     * create view scope.
-//     * 
-//     * @return {@link ViewScope}
-//     */
-//    @Bean
-//	public static ViewScope viewScope() {
-//		return new ViewScope();
-//	}
-//
-//	/**
-//	 * Allows the use of @Scope("view") on Spring @Component, @Service and @Controller
-//	 * beans
-//	 */
-//	@Bean
-//	public static CustomScopeConfigurer scopeConfigurer() {
-//		CustomScopeConfigurer configurer = new CustomScopeConfigurer();
-//		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-//		hashMap.put("view", viewScope());
-//		configurer.setScopes(hashMap);
-//		return configurer;
-//	}
+    /**
+     * create a JSF listener.
+     * 
+     * @return {@link ServletListenerRegistrationBean}
+     */
+    @Bean
+	public ServletListenerRegistrationBean<ConfigureListener> jsfConfigureListener() {
+		return new ServletListenerRegistrationBean<ConfigureListener>(
+				new ConfigureListener());
+	}
+
     
     
 
