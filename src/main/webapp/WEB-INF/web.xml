@@ -5,7 +5,7 @@
 	version="3.0">
 	<display-name>gestion-reservations-resources</display-name>
 	<welcome-file-list>
-	<welcome-file>/demo/index.html</welcome-file>
+	<welcome-file>index.jsf</welcome-file>
 	</welcome-file-list>
 
 	<!-- <listener> -->
