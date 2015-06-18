@@ -6,4 +6,6 @@ angular.module('jhipsterApp')
 
 .constant('VERSION', '0.0.1-SNAPSHOT')
 
+.constant("appService", {"url": "http://192.168.1.5:8080"});
+
 ;
