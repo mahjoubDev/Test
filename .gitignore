@@ -1,8 +1,8 @@
 
 /bin
 /target
-/src/main/webapp/web/.idea
 
+src/main/webapp/web/.idea
 .checkstyle
 .project
 .settings
