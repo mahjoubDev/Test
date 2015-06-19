@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jhipsterApp')
-    .controller('ReservationController', function ($scope, $http, Category, Resource, Reservation, Users, Principal) {
+    .controller('ReservationController', function ($scope, $http, Category, Resource, Reservation, Users) {
         $scope.categories = Category.findAll();
         $scope.resources = Resource.findAll();
         $scope.resourcesByCategory = [];

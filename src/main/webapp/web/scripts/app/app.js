@@ -4,16 +4,13 @@ angular.module('jhipsterApp', ['LocalStorageModule', 'tmh.dynamicLocale',
     'ngResource', 'ui.router', 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster',
      'smart-table', 'ng-fusioncharts', 'localytics.directives', 'dialogs.main'])
 
-    .run(function ($rootScope, $location, $window, $http, $state, $translate, Auth, Principal, Language, ENV, VERSION) {
+    .run(function ($rootScope, $location, $window, $http, $state, $translate,   Language, ENV, VERSION) {
         $rootScope.ENV = ENV;
         $rootScope.VERSION = VERSION;
         $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
             $rootScope.toState = toState;
             $rootScope.toStateParams = toStateParams;
 
-            if (Principal.isIdentityResolved()) {
-                Auth.authorize();
-            }
 
             // Update the language
             Language.getCurrent().then(function (language) {
@@ -71,11 +68,6 @@ angular.module('jhipsterApp', ['LocalStorageModule', 'tmh.dynamicLocale',
                 }
             },
             resolve: {
-                authorize: ['Auth',
-                    function (Auth) {
-                        return Auth.authorize();
-                    }
-                ],
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('global');
                     $translatePartialLoader.addPart('language');
