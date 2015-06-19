@@ -38,7 +38,7 @@ angular.module('jhipsterApp')
             console.log('call add reservation')
 
             reservationInfo.loginUser = $scope.account.login ;
-            if (angular.isDefined(reservationInfo.reference) && angular.isDefined(reservationInfo.dateStart)
+            if (angular.isDefined(reservationInfo.dateStart)
                 && angular.isDefined(reservationInfo.description) && angular.isDefined($scope.categoryForResourceAdd)
                 && angular.isDefined(reservationInfo.dateEnd) && angular.isDefined(reservationInfo.referenceResource)) {
                 var promise = Reservation.add({}, reservationInfo).$promise;
