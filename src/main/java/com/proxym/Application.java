@@ -27,7 +27,7 @@ import com.sun.faces.config.ConfigureListener;
 public class Application  extends SpringBootServletInitializer{
 
 	/**
-	 * Entry point fo the application.
+	 * Entry point for the application.
 	 * 
 	 * @param args
 	 */
@@ -46,7 +46,7 @@ public class Application  extends SpringBootServletInitializer{
 
 	/**
 	 * Register the JSF servlet, is the same as the
-	 * declaration in the wed.xml
+	 * declaration in the web.xml
 	 * 
 	 * @return
 	 */

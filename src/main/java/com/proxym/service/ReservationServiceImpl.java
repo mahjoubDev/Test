@@ -126,10 +126,14 @@ public class ReservationServiceImpl implements ReservationService {
 
 		
 		// update the rservation with the coming informations.
-		Reservation reservation = reservationInfo.toDomain();
-		reservation.setResource(resource);
-		reservation.setLoginUser(reservationInfo.getLoginUser());
-		reservationRepository.save(reservation);
+		//Reservation reservation = reservationInfo.toDomain();
+		//reservation.setResource(resource);
+		///reservation.setId(existingReservation.getId());
+		//reservationRepository.delete(existingReservation);
+		//reservation.setLoginUser(reservationInfo.getLoginUser());
+		existingReservation.setDateEnd(reservationInfo.getDateEnd());
+		existingReservation.setDateStart(reservationInfo.getDateStart());
+		reservationRepository.save(existingReservation);
 
 	}
 

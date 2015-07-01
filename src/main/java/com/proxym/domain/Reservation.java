@@ -61,7 +61,7 @@ public class Reservation implements Serializable {
 	/**
 	 * List of resources related to this reservation.
 	 */
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "resource", nullable = false)
 	private Resource resource ;
 

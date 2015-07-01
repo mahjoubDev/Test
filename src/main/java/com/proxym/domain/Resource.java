@@ -69,14 +69,14 @@ public class Resource implements Serializable {
 	/**
 	 * category which the resource belong to.
 	 */
-	@ManyToOne()
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "category")
 	private Categorie category;
 	
 	/**
 	 * List of resources related to this category.
 	 */
-	@OneToMany(mappedBy = "resource",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "resource",fetch=FetchType.EAGER ,cascade = CascadeType.ALL)
 	private Set<Reservation> reservations = new HashSet<Reservation>(0);
 
 	/**

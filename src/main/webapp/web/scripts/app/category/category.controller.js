@@ -44,6 +44,7 @@ angular.module('jhipsterApp')
                     $scope.categories = Category.findAll();
                     $scope.categorieInfo = {};
                     $scope.showModalSucess = !$scope.showModalSucess;
+                    $window.location.reload();
 
                 }, function (error) {
                     $scope.addCategoryError = true;
@@ -92,6 +93,7 @@ angular.module('jhipsterApp')
                 promise.then(function (data) {
                     console.log("category updated successfully")
                     $scope.categories = Category.findAll();
+                    $window.location.reload();
                 }, function (error) {
                     console.log("there is an error in update  " + error);
                 });

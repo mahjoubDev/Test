@@ -61,6 +61,7 @@ angular.module('jhipsterApp')
                         $scope.resources = Resource.findAll();                    // $route.reload();
                         $scope.resourceInfo = {};
                         $scope.showModalSucess = !$scope.showModalSucess;
+                        $window.location.reload();
 
                     }, function (error) {
                         $scope.addResourceError = true;
@@ -104,6 +105,7 @@ angular.module('jhipsterApp')
                 promise.then(function (data) {
                     console.log("resource updated successfully");
                     $scope.resourceInfo = Resource.findAll();
+                    $window.location.reload();
 
                 }, function (error) {
                     console.log("there is an error in update resource   " + JSON.stringify(error));

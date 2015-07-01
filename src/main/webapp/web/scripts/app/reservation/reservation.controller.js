@@ -50,6 +50,7 @@ angular.module('jhipsterApp')
                         $scope.addReservationError = false;
                         $scope.error = {};
                         $scope.showModalSucess = !$scope.showModalSucess;
+                        $window.location.reload();
 
 
                     }, function (error) {
@@ -80,6 +81,7 @@ angular.module('jhipsterApp')
                 $scope.showModalDelete = !$scope.showModalDelete;
                 $scope.categoryForResourceAdd = {};
                 $scope.resourcesByCategoryForAdd = [];
+                $window.location.reload();
 
             }, function (error) {
                 $scope.error = error ;
@@ -107,6 +109,7 @@ angular.module('jhipsterApp')
                     $scope.addReservationError = false ;
                     $scope.error = {};
                     $scope.showModalSucess = !$scope.showModalSucess;
+                    $window.location.reload();
 
                 }, function (error) {
                     $scope.addReservationError = true;
