@@ -1,11 +1,17 @@
 package com.proxym.config;
 
-import com.mangofactory.swagger.configuration.SpringSwaggerConfig;
-import com.mangofactory.swagger.models.dto.ApiInfo;
-import com.mangofactory.swagger.plugin.*;
+import javax.servlet.MultipartConfigElement;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.*;
+import org.springframework.boot.context.embedded.MultipartConfigFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.mangofactory.swagger.configuration.SpringSwaggerConfig;
+import com.mangofactory.swagger.models.dto.ApiInfo;
+import com.mangofactory.swagger.plugin.EnableSwagger;
+import com.mangofactory.swagger.plugin.SwaggerSpringMvcPlugin;
 
 /**
  * This class is a java base configuration for swagger-ui, it can be user by
@@ -56,6 +62,12 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)
                 //Here we specify URI patterns which will be included in Swagger docs. Use regex for this purpose.
                 .includePatterns("/proxym.*");
+    }
+    
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        return factory.createMultipartConfig();
     }
 
 }
